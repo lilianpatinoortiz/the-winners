@@ -7,8 +7,8 @@ const resolvers = {
   // Defines the resolvers query - This has to match the typeDefs
   // We use mongoose queries. Its a function that determines how data is populated
   Query: {
-    user: async (parent, { username }) => {
-      return await User.findOne({ username });
+    user: async (parent, { email }) => {
+      return await User.findOne({ email });
     },
   },
 };

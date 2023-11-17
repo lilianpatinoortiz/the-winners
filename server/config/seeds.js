@@ -6,15 +6,13 @@ db.once("open", async () => {
   await cleanDB("User", "users");
 
   await User.create({
-    firstName: "Pamela",
-    lastName: "Washington",
+    name: "Pamela Washington",
     email: "pamela@testmail.com",
     password: "password12345",
   });
 
   await User.create({
-    firstName: "Elijah",
-    lastName: "Holt",
+    name: "Elijah Holt",
     email: "eholt@testmail.com",
     password: "password12345",
   });

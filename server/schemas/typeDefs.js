@@ -4,7 +4,7 @@ const typeDefs = `
   # Define what can be queried for each user, this has to match to the models
   type User {
     _id: ID
-    username: String
+    name: String
     email: String
     password: String
   }
