@@ -1,20 +1,22 @@
 const typeDefs = `
-# Define what can be queried for each user, this has to match to the models
-type User {
+
+  # DATA DEFINITON
+  # Define what can be queried for each user, this has to match to the models
+  type User {
     _id: ID
     username: String
     email: String
     password: String
   }
   
-  # Define the queries, this has to match to the typeDefs
+  # ENTRY POINTS
+  # These are the entry points, controlls the data the query has access to.
+  # Ex. user query has access to a User model data
   type Query {
     user: User
   }
 
-  # Define the mutations, this has to match to the typeDefs
-  
-  # Define the auth
+
   type Auth {
     token: ID
     user: User
