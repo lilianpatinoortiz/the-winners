@@ -1,6 +1,6 @@
 function Header() {
   return (
-    <header className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionAbsolute css-1se5fxw">
+    <header className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionAbsolute css-im4i5j">
       <div className="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-xgqgls">
         <button
           className="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeMedium css-179x4hi"
