@@ -6,10 +6,11 @@ import App from "./App.jsx";
 import "./index.css";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-import LoginForm from "./components/Login/LoginForm.jsx";
 import Task from "./components/Task/index.jsx";
 import MyGuru from "./pages/MyGuru.jsx";
 import Kanban from "./pages/Kanban.jsx";
+import LoginForm from "./components/Login/index.jsx";
+import SignupForm from "./components/Signup/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -34,13 +35,13 @@ const router = createBrowserRouter([
         element: <Task />,
       },
       {
-         path: "/login",
-         element: <LoginForm />,
+        path: "/login",
+        element: <LoginForm />,
       },
-      // {
-      //   path: "/signup",
-      //   element: <Signup />,
-      // },
+      {
+        path: "/signup",
+        element: <SignupForm />,
+      },
     ],
   },
 ]);

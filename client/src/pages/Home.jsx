@@ -40,10 +40,10 @@ function Home() {
             <TasksCompleted></TasksCompleted>
           </Item>
         </Grid>
-        <Grid item xs={9} key={1}>
+        <Grid item xs={9} key={2}>
           <Chart data={data}></Chart>
         </Grid>
-        <Grid item xs={12} key={2}>
+        <Grid item xs={12} key={3}>
           <Item key={1} elevation={4}>
             <TasksList></TasksList>
           </Item>
