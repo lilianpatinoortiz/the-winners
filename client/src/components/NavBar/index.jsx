@@ -19,6 +19,9 @@ function Nav() {
         <Button key={4} variant="contained" href="/kanban">
           Kanban
         </Button>,
+        <Button key={1} variant="contained" href="/tasks">
+        Task
+      </Button>,
       ]}
     ></Navbar>
   );

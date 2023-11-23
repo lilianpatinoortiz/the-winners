@@ -6,6 +6,7 @@ import App from "./App.jsx";
 import "./index.css";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
+import Task from "./components/Task/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
+      {
+        path: '/tasks',
+        element: <Task />
+      }
       // {
       //   path: "/login",
       //   element: <Login />,
