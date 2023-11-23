@@ -45,7 +45,10 @@ const typeDefs = `
     task: Task,
     reminder: Reminder
   }
-
+  type Mutation{
+    createUser(name: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+  
 
   type Auth {
     token: ID
