@@ -6,7 +6,7 @@ import App from "./App.jsx";
 import "./index.css";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-
+import LoginForm from "./components/Login/LoginForm.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -17,10 +17,10 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      // {
-      //   path: "/login",
-      //   element: <Login />,
-      // },
+      {
+        path: "/login",
+        element: <LoginForm />,
+      },
       // {
       //   path: "/signup",
       //   element: <Signup />,
