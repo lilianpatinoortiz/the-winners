@@ -16,18 +16,15 @@ function Navbar() {
         <Button key={3} variant="outlined" href="/kanban">
           Kanban
         </Button>,
-        <Button key={4} variant="outlined" href="/login">
+        <Button key={4} variant="outlined" href="/tasks">
+          Task
+        </Button>,
+        <Button key={5} variant="outlined" href="/login">
           Login
         </Button>,
-        <Button key={5} variant="outlined" href="/signup">
+        <Button key={6} variant="outlined" href="/signup">
           Signup
         </Button>,
-        <Button key={4} variant="contained" href="/kanban">
-          Kanban
-        </Button>,
-        <Button key={1} variant="contained" href="/tasks">
-        Task
-      </Button>,
       ]}
     ></Nav>
   );
