@@ -44,7 +44,7 @@ function Chart({ data }) {
                 ...theme.typography.body1,
               }}
             >
-              Tasks Completed
+              No. Tasks Completed
             </Label>
           </YAxis>
           <Tooltip />
