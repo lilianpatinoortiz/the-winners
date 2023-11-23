@@ -7,6 +7,7 @@ import "./index.css";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Task from "./components/Task/index.jsx";
+import MyGuru from "./pages/MyGuru.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,11 +22,15 @@ const router = createBrowserRouter([
       {
         path: '/tasks',
         element: <Task />
-      }
+      },
       // {
       //   path: "/login",
       //   element: <Login />,
       // },
+      {
+        path: "/myguru",
+        element: <MyGuru />,
+      },
       // {
       //   path: "/signup",
       //   element: <Signup />,
