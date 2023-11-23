@@ -1,10 +1,13 @@
 import {
+  BarChart,
+  Bar,
   LineChart,
   Line,
   XAxis,
   YAxis,
   Label,
   ResponsiveContainer,
+  Tooltip,
 } from "recharts";
 import { useTheme } from "@mui/material/styles";
 
@@ -14,7 +17,7 @@ function Chart({ data }) {
   return (
     <>
       <ResponsiveContainer>
-        <LineChart
+        <BarChart
           data={data}
           margin={{
             top: 16,
@@ -24,7 +27,7 @@ function Chart({ data }) {
           }}
         >
           <XAxis
-            dataKey="time"
+            dataKey="key"
             stroke={theme.palette.text.secondary}
             style={theme.typography.body2}
           />
@@ -44,14 +47,18 @@ function Chart({ data }) {
               Tasks Completed
             </Label>
           </YAxis>
-          <Line
-            isAnimationActive={false}
+          <Tooltip />
+          <Bar
+            fill={theme.palette.primary.main}
+            isAnimationActive={true}
+            animationDuration={2000}
+            animationEasing="ease"
             type="monotone"
-            dataKey="amount"
+            dataKey="value"
             stroke={theme.palette.primary.main}
-            dot={false}
+            dot={true}
           />
-        </LineChart>
+        </BarChart>
       </ResponsiveContainer>
     </>
   );

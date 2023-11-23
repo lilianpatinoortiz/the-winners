@@ -12,8 +12,8 @@ const Item = styled(Paper)(({ theme }) => ({
   lineHeight: "60px",
 }));
 
-function createData(time, amount) {
-  return { time, amount };
+function createData(key, value) {
+  return { key, value };
 }
 
 const data = [
@@ -25,10 +25,10 @@ const data = [
   createData("JUN", 7),
   createData("JUL", 5),
   createData("AUG", 7),
-  createData("SEP", 10),
+  createData("SEP", 7),
   createData("OCT", 10),
   createData("NOV", 9),
-  createData("DEC", 10),
+  createData("DEC", 1),
 ];
 
 function Home() {
