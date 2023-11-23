@@ -7,6 +7,10 @@ import "./index.css";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import LoginForm from "./components/Login/LoginForm.jsx";
+import Task from "./components/Task/index.jsx";
+import MyGuru from "./pages/MyGuru.jsx";
+import Kanban from "./pages/Kanban.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,16 +22,24 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/login",
-        element: <LoginForm />,
+        path: "/myguru",
+        element: <MyGuru />,
+      },
+      {
+        path: "/kanban",
+        element: <Kanban />,
+      },
+      {
+        path: "/tasks",
+        element: <Task />,
+      },
+      {
+         path: "/login",
+         element: <LoginForm />,
       },
       // {
       //   path: "/signup",
       //   element: <Signup />,
-      // },
-      // {
-      //   path: "/kanban",
-      //   element: <Kanban />,
       // },
     ],
   },

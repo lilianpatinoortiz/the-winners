@@ -1,4 +1,5 @@
 import { useRouteError } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 function NotFound() {
   const error = useRouteError();
@@ -6,10 +7,14 @@ function NotFound() {
 
   return (
     <div id="error-page">
-      <h1>Oops!</h1>
-      <p>
-        <i>{error.statusText || error.message}</i>
-      </p>
+      <br></br>
+      <i>{error.statusText || error.message}</i>
+      <h2>Whoops! This is not what you were looking for right?</h2>
+
+      <Button variant="contained" href="/">
+        Go back
+      </Button>
+      <img src="src/assets/img/404.svg" alt="404" />
     </div>
   );
 }
