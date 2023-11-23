@@ -804,8 +804,8 @@ body::backdrop {
   display: block;
   padding-left: 16px;
   padding-right: 16px;
-  margin-top: 32px;
-  margin-bottom: 32px;
+  margin-top: 100px;
+  margin-bottom: 50px;
 }
 
 @media (min-width: 600px) {
@@ -1351,4 +1351,26 @@ body::backdrop {
   text-align: center;
   top: 0px;
   left: 0px;
+}
+
+.css-2s90m6-MuiAvatar-root {
+  background-color: #1976d2 !important;
+}
+.css-1sazv7p-MuiStack-root {
+  margin-left: 20px;
+}
+
+#alert {
+  position: absolute;
+  top: 80px;
+  right: 0;
+}
+
+#task-completed {
+  padding: 20px;
+}
+
+#task-completed > label {
+  font-size: 70px;
+  font-family: fantasy;
 }
