@@ -7,6 +7,7 @@ import "./index.css";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import MyGuru from "./pages/MyGuru.jsx";
+import Kanban from "./pages/Kanban.jsx";
 
 const router = createBrowserRouter([
   {
@@ -23,13 +24,17 @@ const router = createBrowserRouter([
         element: <MyGuru />,
       },
       // {
+      //   path: "/login",
+      //   element: <Login />,
+      // },
+      // {
       //   path: "/signup",
       //   element: <Signup />,
       // },
-      // {
-      //   path: "/kanban",
-      //   element: <Kanban />,
-      // },
+      {
+        path: "/kanban",
+        element: <Kanban />,
+      },
     ],
   },
 ]);
