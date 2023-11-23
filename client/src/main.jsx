@@ -21,16 +21,16 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/tasks',
-        element: <Task />
-      },
-      // {
-      //   path: "/login",
-      //   element: <Login />,
-      // },
-      {
         path: "/myguru",
         element: <MyGuru />,
+      },
+      {
+        path: "/kanban",
+        element: <Kanban />,
+      },
+      {
+        path: "/tasks",
+        element: <Task />,
       },
       // {
       //   path: "/login",
@@ -40,10 +40,6 @@ const router = createBrowserRouter([
       //   path: "/signup",
       //   element: <Signup />,
       // },
-      {
-        path: "/kanban",
-        element: <Kanban />,
-      },
     ],
   },
 ]);

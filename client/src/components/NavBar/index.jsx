@@ -17,7 +17,7 @@ function Navbar() {
           Kanban
         </Button>,
         <Button key={4} variant="outlined" href="/tasks">
-          Task
+          Tasks
         </Button>,
         <Button key={5} variant="outlined" href="/login">
           Login
