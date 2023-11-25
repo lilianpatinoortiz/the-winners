@@ -1389,3 +1389,7 @@ body::backdrop {
 #tasks-grid {
   padding-top: 50px;
 }
+
+.MuiTableCell-alignRight-forced {
+  text-align: right !important;
+}
