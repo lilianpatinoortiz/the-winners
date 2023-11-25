@@ -1,106 +1,52 @@
-import { useEffect, useState } from "react";
-import "./App.css";
-import Board from "./assets/components/KanbanBoard/Board";
-import Editable from "./assets/components/Editable/Editable";
-import { DragDropContext } from "react-beautiful-dnd";
-import { v4 as uuidv4 } from "uuid";
-import "../bootstrap.css";
+import { Outlet } from "react-router-dom";
+import { Header } from "./components/Header";
+import { Navbar } from "./components/NavBar";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("id_token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
+  const [count, setCount] = useState(0)
 
-  const [data, setData] = useState(
-    localStorage.getItem("kanban-board")
-      ? JSON.parse(localStorage.getItem("kanban-board"))
-      : []
-  );
-
-  const setName = (title, bid) => {
-    const index = data.findIndex((item) => item.id === bid);
-    const tempData = [...data];
-    tempData[index].boardName = title;
-    setData(tempData);
-  };
-
-  const dragCardInBoard = (source, destination) => {
-    let tempData = [...data];
-    const destinationBoardIdx = tempData.findIndex(
-      (item) => item.id.toString() === destination.droppableId
-    );
-    const sourceBoardIdx = tempData.findIndex(
-      (item) => item.id.toString() === source.droppableId
-    );
-    tempData[destinationBoardIdx].card.splice(
-      destination.index,
-      0,
-      tempData[sourceBoardIdx].card[source.index]
-    );
-    tempData[sourceBoardIdx].card.splice(source.index, 1);
-
-    return tempData;
-
-    const addBoard = (title) => {
-      const tempData = [...data];
-      tempData.push({
-        id: uuidv4(),
-        boardName: title,
-        card: [],
-      });
-      setData(tempData);
-    };
-  
-    const removeBoard = (bid) => {
-      const tempData = [...data];
-      const index = data.findIndex((item) => item.id === bid);
-      tempData.splice(index, 1);
-      setData(tempData);
-    };
-
-    const onDragEnd = (result) => {
-      const { source, destination } = result;
-      if (!destination) return;
-  
-      if (source.droppableId === destination.droppableId) return;
-  
-      setData(dragCardInBoard(source, destination));
-    };
-
-    useEffect(() => {
-      localStorage.setItem("kanban-board", JSON.stringify(data));
-    }, [data]);
-  
-  
-  };
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="App" data-theme={theme}>
-        <Navbar switchTheme={switchTheme} />
-        <div className="app_outer">
-          <div className="app_boards">
-            {data.map((item) => (
-              <Board
-                key={item.id}
-                id={item.id}
-                name={item.boardName}
-                card={item.card}
-                setName={setName}
-                addCard={addCard}
-                removeCard={removeCard}
-                removeBoard={removeBoard}
-                updateCard={updateCard}
-              />
-            ))}
-            <Editable
-              class={"add__board"}
-              name={"Add Board"}
-              btnName={"Add Board"}
-              onSubmit={addBoard}
-              placeholder={"Enter Board  Title"}
-            />
+    <>
+      <ApolloProvider client={client}>
+        <Header />
+        <Navbar />
+        <main className="MuiBox-root css-fxbtpg">
+          <div className="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-i6s8oy"></div>
+          <div className="MuiContainer-root MuiContainer-maxWidthLg css-1oifrf6">
+            <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1h77wgb">
+              <Outlet />
+            </div>
           </div>
-        </div>
-      </div>
-    </DragDropContext>
+        </main>
+      </ApolloProvider>
+    </>
   );
 }
 
-export default App
+export default App;
