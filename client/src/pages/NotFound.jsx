@@ -8,8 +8,8 @@ function NotFound() {
   return (
     <div id="error-page">
       <br></br>
-      <i>{error.statusText || error.message}</i>
       <h2>Whoops! This is not what you were looking for right?</h2>
+      <i>{error.statusText || error.message}</i>
 
       <Button variant="contained" href="/">
         Go back

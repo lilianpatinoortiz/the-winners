@@ -1,4 +1,3 @@
-// Bringing in the required import from 'react-router-dom'
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import HomeIcon from "@mui/icons-material/Home";
@@ -8,6 +7,7 @@ import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
+import WorkIcon from "@mui/icons-material/Work";
 
 function Navbar() {
   // The Navbar UI component will render each of the Link elements in the links prop
@@ -30,14 +30,6 @@ function Navbar() {
           </ListItemAvatar>
           <ListItemText primary="Home" />
         </Button>,
-        <Button key={3} href="/myguru">
-          <ListItemAvatar>
-            <Avatar>
-              <AccessTimeFilledIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="My Guru" />
-        </Button>,
         <Button key={4} href="/kanban">
           <ListItemAvatar>
             <Avatar>
@@ -45,6 +37,14 @@ function Navbar() {
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary="Kanban" />
+        </Button>,
+        <Button key={3} href="/projects">
+          <ListItemAvatar>
+            <Avatar>
+              <WorkIcon />
+            </Avatar>
+          </ListItemAvatar>
+          <ListItemText primary="Projects" />
         </Button>,
         <Button key={5} href="/tasks">
           <ListItemAvatar>

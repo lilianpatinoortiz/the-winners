@@ -1375,3 +1375,17 @@ body::backdrop {
   font-size: 70px;
   font-family: fantasy;
 }
+
+#project-box {
+  min-height: 300px;
+  min-width: 300px;
+  text-align: center;
+
+  > h2 {
+    padding-top: 20px;
+  }
+}
+
+#tasks-grid {
+  padding-top: 50px;
+}

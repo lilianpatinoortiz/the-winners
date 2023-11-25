@@ -1,6 +1,5 @@
-import { TasksCompleted } from "../components/TasksCompleted";
 import { TasksList } from "../components/TasksList";
-import { Chart } from "../components/Chart";
+import { ChartBar, ChartPie } from "../components/Chart";
 import { styled } from "@mui/material/styles";
 
 import Grid from "@mui/material/Grid";
@@ -36,11 +35,14 @@ function Home() {
     <>
       <Grid container spacing={2}>
         <Grid item xs={9} key={2}>
-          <Chart data={data}></Chart>
+          <ChartBar data={data}></ChartBar>
         </Grid>
         <Grid item xs={3} key={1}>
           <Item key={1} elevation={4}>
-            <TasksCompleted></TasksCompleted>
+            <div id="task-completed">
+              <h2>Tasks Completed</h2>
+              <label>1/10</label>
+            </div>
           </Item>
         </Grid>
         <Grid item xs={12} key={3}>
