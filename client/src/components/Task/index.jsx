@@ -1,9 +1,12 @@
 import { useState } from "react";
-import { ActionButtonNav } from "../ActionButton/index";
 import Grid from "@mui/material/Grid";
-import Item from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { TasksList } from "../TasksList";
+
+const createTask = () => {
+  console.log("create task");
+};
 
 function Task() {
   const [task, setTask] = useState("");
@@ -29,11 +32,19 @@ function Task() {
 function TasksContainer({ tasks }) {
   return (
     <>
-      <ActionButtonNav
-        title="Create Task"
-        action=""
-        icon={<AddCircleIcon />}
-      ></ActionButtonNav>
+      <Grid container spacing={2}>
+        <Grid item xs={9} md={10}></Grid>
+        <Grid item xs={2} md={2}>
+          <Button
+            component="label"
+            variant="contained"
+            onClick={createTask}
+            startIcon={<AddCircleIcon />}
+          >
+            Create task
+          </Button>
+        </Grid>
+      </Grid>
       {tasks.length ? (
         <Grid container spacing={2} id="tasks-grid">
           <TasksList></TasksList>

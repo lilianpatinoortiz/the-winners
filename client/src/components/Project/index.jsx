@@ -1,7 +1,11 @@
 import Grid from "@mui/material/Grid";
 import Item from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { ActionButtonNav } from "../ActionButton/index";
+
+const createProject = () => {
+  console.log("create project");
+};
 
 function ProjectBox({ title, data }) {
   return (
@@ -16,11 +20,19 @@ function ProjectBox({ title, data }) {
 function ProjectsContainer({ projects }) {
   return (
     <>
-      <ActionButtonNav
-        title="Create Project"
-        action=""
-        icon={<AddCircleIcon />}
-      ></ActionButtonNav>
+      <Grid container spacing={2}>
+        <Grid item xs={9} md={10}></Grid>
+        <Grid item xs={2} md={2}>
+          <Button
+            component="label"
+            variant="contained"
+            onClick={createProject}
+            startIcon={<AddCircleIcon />}
+          >
+            Create project
+          </Button>
+        </Grid>
+      </Grid>
       {projects.length ? (
         <Grid container spacing={2}>
           {projects.map((project) => (
