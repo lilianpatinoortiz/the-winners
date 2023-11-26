@@ -14,7 +14,30 @@ const Item = styled(Paper)(({ theme }) => ({
 function createData(key, value) {
   return { key, value };
 }
-
+function createTask(
+  id,
+  title,
+  dueDate,
+  priority,
+  status,
+  description,
+  project,
+  createdDate
+) {
+  return {
+    id,
+    title,
+    dueDate,
+    priority,
+    status,
+    description,
+    project,
+    createdDate,
+  };
+}
+/*
+ Dummy data - to be removed
+ */
 const data = [
   createData("JAN", 0),
   createData("FEB", 1),
@@ -29,6 +52,94 @@ const data = [
   createData("NOV", 9),
   createData("DEC", 1),
 ];
+const totalTasks = 10;
+const completedTasks = 1;
+const rows = [
+  createTask(
+    1,
+    "Task 1",
+    "10/10/2023",
+    3,
+    "Open",
+    "My task description",
+    "Project 1",
+    "10/10/2023"
+  ),
+  createTask(
+    2,
+    "Task 2",
+    "10/10/2023",
+    2,
+    "In Progress",
+    "My task description",
+    "Project 1",
+    "10/10/2023"
+  ),
+  createTask(
+    3,
+    "Task 3",
+    "10/10/2023",
+    1,
+    "Open",
+    "My task description",
+    "Project 1",
+    "10/10/2023"
+  ),
+  createTask(
+    4,
+    "Task 4",
+    "10/10/2023",
+    2,
+    "Open",
+    "My task description",
+    "Project 1",
+    "1/10/2023"
+  ),
+  createTask(
+    5,
+    "Task 5",
+    "10/10/2023",
+    3,
+    "Open",
+    "My task description",
+    "Project 1",
+    "10/10/2023"
+  ),
+  createTask(
+    6,
+    "Task 6",
+    "10/10/2023",
+    3,
+    "Finished",
+    "My task description",
+    "Project 1",
+    "10/10/2023"
+  ),
+  createTask(
+    7,
+    "Task 7",
+    "10/10/2023",
+    1,
+    "In Progress",
+    "My task description",
+    "Project 1",
+    "1/1/2023"
+  ),
+  createTask(
+    8,
+    "Task 8",
+    "10/10/2023",
+    2,
+    "Open",
+    "My task description",
+    "Project 1",
+    "1/1/2023"
+  ),
+];
+
+/*  
+Dummy data - to be removed
+ */
 
 function Home() {
   return (
@@ -41,7 +152,9 @@ function Home() {
           <Item key={1} elevation={4}>
             <div id="task-completed">
               <h2>Tasks Completed</h2>
-              <label>1/10</label>
+              <label>
+                {completedTasks}/{totalTasks}
+              </label>
             </div>
           </Item>
         </Grid>
@@ -50,6 +163,7 @@ function Home() {
             <TasksList
               rowsPerPageProp={5}
               isBackgroundColorEnabled={false}
+              rows={rows}
             ></TasksList>
           </Item>
         </Grid>

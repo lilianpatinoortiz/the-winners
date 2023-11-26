@@ -23,111 +23,6 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { useState, useMemo } from "react";
 
-function createData(
-  id,
-  title,
-  dueDate,
-  priority,
-  status,
-  description,
-  project,
-  createdDate
-) {
-  return {
-    id,
-    title,
-    dueDate,
-    priority,
-    status,
-    description,
-    project,
-    createdDate,
-  };
-}
-
-const rows = [
-  createData(
-    1,
-    "Task 1",
-    "10/10/2023",
-    3,
-    "Open",
-    "My task description",
-    "Project 1",
-    "10/10/2023"
-  ),
-  createData(
-    2,
-    "Task 2",
-    "10/10/2023",
-    2,
-    "In Progress",
-    "My task description",
-    "Project 1",
-    "10/10/2023"
-  ),
-  createData(
-    3,
-    "Task 3",
-    "10/10/2023",
-    1,
-    "Open",
-    "My task description",
-    "Project 1",
-    "10/10/2023"
-  ),
-  createData(
-    4,
-    "Task 4",
-    "10/10/2023",
-    2,
-    "Open",
-    "My task description",
-    "Project 1",
-    "1/10/2023"
-  ),
-  createData(
-    5,
-    "Task 5",
-    "10/10/2023",
-    3,
-    "Open",
-    "My task description",
-    "Project 1",
-    "10/10/2023"
-  ),
-  createData(
-    6,
-    "Task 6",
-    "10/10/2023",
-    3,
-    "Finished",
-    "My task description",
-    "Project 1",
-    "10/10/2023"
-  ),
-  createData(
-    7,
-    "Task 7",
-    "10/10/2023",
-    1,
-    "In Progress",
-    "My task description",
-    "Project 1",
-    "1/1/2023"
-  ),
-  createData(
-    8,
-    "Task 8",
-    "10/10/2023",
-    2,
-    "Open",
-    "My task description",
-    "Project 1",
-    "1/1/2023"
-  ),
-];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -325,7 +220,7 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-function TasksList({ rowsPerPageProp, isBackgroundColorEnabled }) {
+function TasksList({ rows, rowsPerPageProp, isBackgroundColorEnabled }) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);

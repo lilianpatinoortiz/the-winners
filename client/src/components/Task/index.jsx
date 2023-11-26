@@ -29,7 +29,7 @@ function Task() {
   );
 }
 
-function TasksContainer({ tasks, rowsPerPageProp }) {
+function TasksContainer({ rows, rowsPerPageProp }) {
   return (
     <>
       <Grid container spacing={2}>
@@ -45,9 +45,10 @@ function TasksContainer({ tasks, rowsPerPageProp }) {
           </Button>
         </Grid>
       </Grid>
-      {tasks.length ? (
+      {rows.length ? (
         <Grid container spacing={2} id="tasks-grid">
           <TasksList
+            rows={rows}
             rowsPerPageProp={rowsPerPageProp}
             isBackgroundColorEnabled={true}
           ></TasksList>
