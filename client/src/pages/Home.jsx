@@ -47,7 +47,10 @@ function Home() {
         </Grid>
         <Grid item xs={12} key={3}>
           <Item key={1} elevation={4}>
-            <TasksList></TasksList>
+            <TasksList
+              rowsPerPageProp={5}
+              isBackgroundColorEnabled={false}
+            ></TasksList>
           </Item>
         </Grid>
       </Grid>

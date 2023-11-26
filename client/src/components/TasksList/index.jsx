@@ -49,7 +49,7 @@ const rows = [
     "Task 1",
     "10/10/2022",
     "10/10/2023",
-    1,
+    3,
     "Open",
     "My task description"
   ),
@@ -74,6 +74,42 @@ const rows = [
   createData(
     4,
     "Task 4",
+    "10/10/2022",
+    "10/10/2023",
+    2,
+    "Open",
+    "My task description"
+  ),
+  createData(
+    5,
+    "Task 5",
+    "10/10/2022",
+    "10/10/2023",
+    3,
+    "Open",
+    "My task description"
+  ),
+  createData(
+    6,
+    "Task 6",
+    "10/10/2022",
+    "10/10/2023",
+    3,
+    "Open",
+    "My task description"
+  ),
+  createData(
+    7,
+    "Task 7",
+    "10/10/2022",
+    "10/10/2023",
+    1,
+    "Open",
+    "My task description"
+  ),
+  createData(
+    8,
+    "Task 8",
     "10/10/2022",
     "10/10/2023",
     2,
@@ -274,13 +310,13 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-function TasksList() {
+function TasksList({ rowsPerPageProp, isBackgroundColorEnabled }) {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageProp);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -377,6 +413,9 @@ function TasksList() {
                     key={row.id}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
+                    className={
+                      isBackgroundColorEnabled ? "priority-" + row.priority : ""
+                    }
                   >
                     <TableCell padding="checkbox">
                       <Checkbox

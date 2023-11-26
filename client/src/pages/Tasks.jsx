@@ -12,7 +12,7 @@ const tasks = [
 function Tasks() {
   return (
     <>
-      <TasksContainer tasks={tasks}></TasksContainer>
+      <TasksContainer tasks={tasks} rowsPerPageProp={10}></TasksContainer>
     </>
   );
 }

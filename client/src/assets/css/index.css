@@ -1393,3 +1393,13 @@ body::backdrop {
 .MuiTableCell-alignRight-forced {
   text-align: right !important;
 }
+
+.priority-1 {
+  background-color: #ff000012;
+}
+.priority-2 {
+  background-color: #ffc10717;
+}
+.priority-3 {
+  background-color: #4caf5024;
+}
