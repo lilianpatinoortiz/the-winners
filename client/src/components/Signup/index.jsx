@@ -49,13 +49,12 @@ const SignupForm = () => {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
-      console.log(data);
-      if (!data.createUser) return;
-      Auth.login(data.createUser.token);
+
+      if (!data.addUser) return;
+      Auth.login(data.addUser.token);
 
       // Take the users to another page if they sucesfully sign up
-      // navigate("/")
-      window.location.reload();
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
