@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { getGraphQLErrorsFromResult } from "@apollo/client/utilities";
-
+//test comment
 export const ADD_USER =gql`
 mutation createUser($name: String!, $email: String!, $password: String!) {
     createUser(name: $name, email: $email, password: $password) {
