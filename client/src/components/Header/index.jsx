@@ -1,3 +1,5 @@
+import { BadgeAvatar } from "../StyledBadge";
+
 function Header() {
   return (
     <header className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionAbsolute css-im4i5j">
@@ -22,6 +24,7 @@ function Header() {
         <h1 className="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-11shd7s">
           Task Guru 2.0
         </h1>
+        <BadgeAvatar></BadgeAvatar>
       </div>
     </header>
   );

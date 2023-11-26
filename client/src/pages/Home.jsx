@@ -1,9 +1,15 @@
 import { TasksList } from "../components/TasksList";
 import { ChartBar, ChartPie } from "../components/Chart";
 import { styled } from "@mui/material/styles";
-
+import { useState, forwardRef, useEffect } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+
+const Alert = forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -142,8 +148,28 @@ Dummy data - to be removed
  */
 
 function Home() {
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+  useEffect(() => {
+    handleClick();
+  }, []);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
   return (
     <>
+      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          All data is up to date!
+        </Alert>
+      </Snackbar>
       <Grid container spacing={2}>
         <Grid item xs={9} key={2}>
           <ChartBar data={data}></ChartBar>
