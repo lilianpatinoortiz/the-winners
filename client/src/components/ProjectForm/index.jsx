@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_PROJECT_MUTATION } from './graphql';
 
 const ProjectForm = () => {
-    const [prject, setProjects] = useState({ name: '', description: '', });
+    const [project, setProject] = useState({ name: '', description: '', });
     const [createProject] = useMutation(CREATE_PROJECT_MUTATION);
 
     const handelSubmit = async (e) => {
