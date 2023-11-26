@@ -105,7 +105,7 @@ function ChartBar({ data, colors }) {
           <Bar
             fill={colors ? colors[0] : theme.palette.primary.main}
             isAnimationActive={true}
-            animationDuration={2000}
+            animationDuration={3000}
             animationEasing="ease"
             type="monotone"
             dataKey="value"

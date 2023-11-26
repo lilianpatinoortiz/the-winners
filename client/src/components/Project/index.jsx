@@ -4,22 +4,6 @@ import Button from "@mui/material/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { ChartBar } from "../Chart/index";
 
-/*
- Dummy data - to be removed
- */
-function createData(key, value) {
-  return { key, value };
-}
-const data = [
-  createData("Finished", 1),
-  createData("In Progress", 2),
-  createData("Open", 4),
-];
-
-/*
- Dummy data - to be removed
- */
-
 const createProject = () => {
   console.log("create project");
 };
@@ -48,7 +32,7 @@ function ProjectsContainer({ projects }) {
                 <div id="project-box">
                   <h2>{project.title}</h2>
                   <ChartBar
-                    data={data}
+                    data={project.data}
                     colors={["#00800075", "#ffc10769", "#673ab76e"]}
                   ></ChartBar>
                   <hr></hr>
