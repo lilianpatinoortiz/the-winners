@@ -46,11 +46,13 @@ const navigate = useNavigate()
       const { data } = await addUser({
         variables: { ...userFormData },
       });
-      if(!data.addUser) return
-      Auth.login(data.addUser.token);
+      console.log(data)
+      if(!data.createUser) return
+      Auth.login(data.createUser.token);
 
       // Take the users to another page if they sucesfully sign up
-    navigate("/")
+    // navigate("/")
+    window.location.reload()
     
     } catch (err) {
       console.error(err); 
