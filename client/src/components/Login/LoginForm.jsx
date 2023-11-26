@@ -1,27 +1,28 @@
 // see SignupForm.js for comments
-// import { useMutation } from '@apollo/client';
-// import { LOGIN_USER } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
+import { LOGIN } from '../../utils/mutations';
 import { useState , useEffect} from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-
+import { useNavigate } from 'react-router-dom';
 
 //import Auth from '../utils/auth';
 
 const LoginForm = () => {
+  const navigate = useNavigate()
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  //const [login, { error }] = useMutation(LOGIN_USER);
-  // useEffect(() => {
-  //   if (error) {
-  //     setShowAlert(true);
-  //   } else {
-  //     setShowAlert(false);
-  //   }
-  // }, [error]);
+  const [login, { error }] = useMutation(LOGIN);
+  useEffect(() => {
+    if (error) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
+  }, [error]);
   const handleInputChange = (event) => {
-    const { email, password } = event.target;
-    setUserFormData({ email, password });
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value});
   };
 
   const handleFormSubmit = async (event) => {
@@ -32,19 +33,20 @@ const LoginForm = () => {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+      //Might want to stop the function here if it is not a valid form config
     }
 
-    // try {
-    //   const { data } = await login({
-    //     variables: { ...userFormData },
-    //   });
-    //   console.log(data);
-    //   Auth.login(data.login.token);
+    try {
+      const { data } = await login({
+        variables: { ...userFormData },
+      });
+      console.log(data);
+      Auth.login(data.login.token);
       
-    // } catch (err) {
-    //   console.error(err);
+    } catch (err) {
+      console.error(err);
       
-    // }
+    }
 
     setUserFormData({
       
@@ -52,6 +54,7 @@ const LoginForm = () => {
       email: '',
       password: '',
     });
+    navigate("/")
   };
 
   return (

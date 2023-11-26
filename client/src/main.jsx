@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import App from "./App.jsx";
 import "./index.css";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import LoginForm from "./components/Login/LoginForm.jsx";
+import SignupForm from "./components/Signup/SignupForm.jsx";
+
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,10 +24,10 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginForm />,
       },
-      // {
-      //   path: "/signup",
-      //   element: <Signup />,
-      // },
+      {
+        path: "/signup",
+        element: <SignupForm />,
+      },
       // {
       //   path: "/kanban",
       //   element: <Kanban />,

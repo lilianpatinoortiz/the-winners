@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import { useState } from "react";
 
 /* In our component: Destructure the data gotten from the PROPs */
