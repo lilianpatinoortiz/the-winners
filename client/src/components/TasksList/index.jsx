@@ -26,20 +26,22 @@ import { useState, useMemo } from "react";
 function createData(
   id,
   title,
-  createdDate,
   dueDate,
   priority,
   status,
-  description
+  description,
+  project,
+  createdDate
 ) {
   return {
     id,
     title,
-    createdDate,
     dueDate,
     priority,
     status,
     description,
+    project,
+    createdDate,
   };
 }
 
@@ -47,74 +49,82 @@ const rows = [
   createData(
     1,
     "Task 1",
-    "10/10/2022",
     "10/10/2023",
     3,
     "Open",
-    "My task description"
+    "My task description",
+    "Project 1",
+    "10/10/2023"
   ),
   createData(
     2,
     "Task 2",
-    "10/10/2022",
     "10/10/2023",
     2,
-    "Open",
-    "My task description"
+    "In Progress",
+    "My task description",
+    "Project 1",
+    "10/10/2023"
   ),
   createData(
     3,
     "Task 3",
-    "10/10/2022",
     "10/10/2023",
     1,
     "Open",
-    "My task description"
+    "My task description",
+    "Project 1",
+    "10/10/2023"
   ),
   createData(
     4,
     "Task 4",
-    "10/10/2022",
     "10/10/2023",
     2,
     "Open",
-    "My task description"
+    "My task description",
+    "Project 1",
+    "1/10/2023"
   ),
   createData(
     5,
     "Task 5",
-    "10/10/2022",
     "10/10/2023",
     3,
     "Open",
-    "My task description"
+    "My task description",
+    "Project 1",
+    "10/10/2023"
   ),
   createData(
     6,
     "Task 6",
-    "10/10/2022",
     "10/10/2023",
     3,
-    "Open",
-    "My task description"
+    "Finished",
+    "My task description",
+    "Project 1",
+    "10/10/2023"
   ),
   createData(
     7,
     "Task 7",
-    "10/10/2022",
     "10/10/2023",
     1,
-    "Open",
-    "My task description"
+    "In Progress",
+    "My task description",
+    "Project 1",
+    "1/1/2023"
   ),
   createData(
     8,
     "Task 8",
-    "10/10/2022",
     "10/10/2023",
     2,
     "Open",
-    "My task description"
+    "My task description",
+    "Project 1",
+    "1/1/2023"
   ),
 ];
 
@@ -158,18 +168,6 @@ const headCells = [
     label: "Title",
   },
   {
-    id: "createdDate",
-    numeric: false,
-    disablePadding: false,
-    label: "Created on",
-  },
-  {
-    id: "dueDate",
-    numeric: false,
-    disablePadding: false,
-    label: "Due date",
-  },
-  {
     id: "priority",
     numeric: true,
     disablePadding: false,
@@ -182,10 +180,28 @@ const headCells = [
     label: "Status",
   },
   {
+    id: "dueDate",
+    numeric: false,
+    disablePadding: false,
+    label: "Due date",
+  },
+  {
     id: "description",
     numeric: false,
     disablePadding: false,
     label: "Description",
+  },
+  {
+    id: "project",
+    numeric: false,
+    disablePadding: false,
+    label: "Project",
+  },
+  {
+    id: "createdDate",
+    numeric: false,
+    disablePadding: false,
+    label: "Created On",
   },
 ];
 
@@ -212,15 +228,14 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select all desserts",
+              "aria-label": "select all tasks",
             }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
-            className="MuiTableCell-alignRight-forced"
             key={headCell.id}
-            align={headCell.numeric ? "right" : "left"}
+            align={headCell.label != "Title" ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -413,9 +428,6 @@ function TasksList({ rowsPerPageProp, isBackgroundColorEnabled }) {
                     key={row.id}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
-                    className={
-                      isBackgroundColorEnabled ? "priority-" + row.priority : ""
-                    }
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -431,14 +443,26 @@ function TasksList({ rowsPerPageProp, isBackgroundColorEnabled }) {
                       id={labelId}
                       scope="row"
                       padding="none"
+                      style={{ width: "200px" }}
                     >
                       {row.title}
                     </TableCell>
-                    <TableCell align="right">{row.createdDate}</TableCell>
-                    <TableCell align="right">{row.dueDate}</TableCell>
-                    <TableCell align="right">{row.priority}</TableCell>
+                    <TableCell
+                      className={
+                        isBackgroundColorEnabled
+                          ? "priority-" + row.priority
+                          : ""
+                      }
+                      align="right"
+                      style={{ width: "10px" }}
+                    >
+                      {row.priority}
+                    </TableCell>
                     <TableCell align="right">{row.status}</TableCell>
+                    <TableCell align="right">{row.dueDate}</TableCell>
                     <TableCell align="right">{row.description}</TableCell>
+                    <TableCell align="right">{row.project}</TableCell>
+                    <TableCell align="right">{row.createdDate}</TableCell>
                   </TableRow>
                 );
               })}
