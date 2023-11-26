@@ -1399,3 +1399,15 @@ body::backdrop {
 .priority-3 {
   background-color: #8bc34a80;
 }
+
+#login,
+#signup {
+  cursor: pointer;
+}
+
+.modal-dialog {
+  padding-top: 10%;
+}
+#projects {
+  padding-top: 20px;
+}

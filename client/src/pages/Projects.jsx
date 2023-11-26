@@ -9,7 +9,7 @@ const projects = [
     data: [
       { key: "Finished", value: 1 },
       { key: "In Progress", value: 2 },
-      { key: "Finished", value: 3 },
+      { key: "Open", value: 3 },
     ],
   },
   {
@@ -18,7 +18,7 @@ const projects = [
     data: [
       { key: "Finished", value: 1 },
       { key: "In Progress", value: 1 },
-      { key: "Finished", value: 1 },
+      { key: "Open", value: 1 },
     ],
   },
   {
@@ -27,7 +27,7 @@ const projects = [
     data: [
       { key: "Finished", value: 10 },
       { key: "In Progress", value: 0 },
-      { key: "Finished", value: 0 },
+      { key: "Open", value: 0 },
     ],
   },
   {
@@ -36,7 +36,7 @@ const projects = [
     data: [
       { key: "Finished", value: 13 },
       { key: "In Progress", value: 3 },
-      { key: "Finished", value: 3 },
+      { key: "Open", value: 3 },
     ],
   },
   {
@@ -45,7 +45,7 @@ const projects = [
     data: [
       { key: "Finished", value: 14 },
       { key: "In Progress", value: 2 },
-      { key: "Finished", value: 8 },
+      { key: "Open", value: 8 },
     ],
   },
   {

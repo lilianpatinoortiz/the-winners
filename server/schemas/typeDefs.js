@@ -1,7 +1,8 @@
 const typeDefs = `
-
-  # DATA DEFINITON
-
+  type Auth {
+    token: ID
+    user: User
+  }
   type Reminder {
     _id: ID
     description: String
@@ -25,8 +26,6 @@ const typeDefs = `
     dueDate: String 
     tasks: [Task]
   }
-
-  # Define what can be queried for each user, this has to match to the models
   type User {
     _id: ID
     name: String
@@ -36,9 +35,7 @@ const typeDefs = `
     tasks: [Task]
   }
   
-  # ENTRY POINTS
-  # These are the entry points, controlls the data the query has access to.
-  # Ex. user query has access to a User model data
+
   type Query {
     user(email: String!): User,
     project: Project,
@@ -49,10 +46,7 @@ const typeDefs = `
     createUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
   
-
-  type Auth {
-    token: ID
-    user: User
   }
+  
   `;
 module.exports = typeDefs;

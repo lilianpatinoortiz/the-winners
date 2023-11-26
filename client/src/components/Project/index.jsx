@@ -25,7 +25,7 @@ function ProjectsContainer({ projects }) {
         </Grid>
       </Grid>
       {projects.length ? (
-        <Grid container spacing={2}>
+        <Grid container spacing={2} id="projects">
           {projects.map((project) => (
             <Grid item xs={8} md={4} key={project.title}>
               <Item key={project.title} elevation={4}>

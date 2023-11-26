@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
 import App from "./App.jsx";
 import "./index.css";
 import NotFound from "./pages/NotFound";
@@ -11,6 +10,7 @@ import LoginForm from "./components/Login/index.jsx";
 import SignupForm from "./components/Signup/index.jsx";
 import Projects from "./pages/Projects.jsx";
 import Tasks from "./pages/Tasks.jsx";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const router = createBrowserRouter([
   {
