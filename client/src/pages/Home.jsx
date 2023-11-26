@@ -1,5 +1,5 @@
 import { TasksList } from "../components/TasksList";
-import { ChartBar, ChartPie } from "../components/Chart";
+import { ChartBar } from "../components/Chart";
 import { styled } from "@mui/material/styles";
 import { useState, forwardRef, useEffect } from "react";
 import Snackbar from "@mui/material/Snackbar";

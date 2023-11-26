@@ -3,13 +3,12 @@ import {
   Bar,
   LineChart,
   Line,
-  PieChart,
-  Pie,
   XAxis,
   YAxis,
   Label,
   ResponsiveContainer,
   Tooltip,
+  Cell,
 } from "recharts";
 import { useTheme } from "@mui/material/styles";
 
@@ -66,12 +65,12 @@ function ChartLine({ data }) {
   );
 }
 
-function ChartBar({ data }) {
+function ChartBar({ data, colors }) {
   const theme = useTheme();
 
   return (
     <>
-      <ResponsiveContainer>
+      <ResponsiveContainer width="99%" height={200}>
         <BarChart
           data={data}
           margin={{
@@ -104,39 +103,26 @@ function ChartBar({ data }) {
           </YAxis>
           <Tooltip />
           <Bar
-            fill={theme.palette.primary.main}
+            fill={colors ? colors[0] : theme.palette.primary.main}
             isAnimationActive={true}
             animationDuration={2000}
             animationEasing="ease"
             type="monotone"
             dataKey="value"
-            stroke={theme.palette.primary.main}
             dot={true}
-          />
+          >
+            {colors ? (
+              data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={colors[index % 20]} />
+              ))
+            ) : (
+              <></>
+            )}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </>
   );
 }
 
-function ChartPie({ data }) {
-  return (
-    <>
-      <ResponsiveContainer>
-        <PieChart width={700} height={700}>
-          <Pie
-            data={data}
-            dataKey="value"
-            nameKey="name"
-            cx="50%"
-            cy="50%"
-            outerRadius={50}
-            fill="#82ca9d"
-            label
-          />
-        </PieChart>
-      </ResponsiveContainer>
-    </>
-  );
-}
-export { ChartLine, ChartBar, ChartPie };
+export { ChartLine, ChartBar };

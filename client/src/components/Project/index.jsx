@@ -2,20 +2,27 @@ import Grid from "@mui/material/Grid";
 import Item from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { ChartBar } from "../Chart/index";
+
+/*
+ Dummy data - to be removed
+ */
+function createData(key, value) {
+  return { key, value };
+}
+const data = [
+  createData("Finished", 1),
+  createData("In Progress", 2),
+  createData("Open", 4),
+];
+
+/*
+ Dummy data - to be removed
+ */
 
 const createProject = () => {
   console.log("create project");
 };
-
-function ProjectBox({ title, data }) {
-  return (
-    <>
-      <div id="project-box">
-        <h2>{title}</h2>
-      </div>
-    </>
-  );
-}
 
 function ProjectsContainer({ projects }) {
   return (
@@ -38,10 +45,15 @@ function ProjectsContainer({ projects }) {
           {projects.map((project) => (
             <Grid item xs={8} md={4} key={project.title}>
               <Item key={project.title} elevation={4}>
-                <ProjectBox
-                  title={project.title}
-                  data={project.data}
-                ></ProjectBox>
+                <div id="project-box">
+                  <h2>{project.title}</h2>
+                  <ChartBar
+                    data={data}
+                    colors={["#00800075", "#ffc10769", "#673ab76e"]}
+                  ></ChartBar>
+                  <hr></hr>
+                  <Button>See more</Button>
+                </div>
               </Item>
             </Grid>
           ))}
