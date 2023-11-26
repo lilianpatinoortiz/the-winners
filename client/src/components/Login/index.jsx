@@ -50,7 +50,7 @@ const LoginForm = () => {
       email: "",
       password: "",
     });
-    navigate("/");
+    navigate("/"); // Redirect user to home page
   };
 
   return (
