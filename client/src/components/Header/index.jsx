@@ -1,6 +1,12 @@
 import { BadgeAvatar } from "../StyledBadge";
+import { useQuery } from "@apollo/client";
+import { QUERY_ME } from "../../utils/queries";
 
 function Header() {
+  // Logged user data (me)
+  const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
+  const user = userData?.me || {};
+
   return (
     <header className="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionAbsolute css-im4i5j">
       <div className="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-xgqgls">
@@ -24,7 +30,7 @@ function Header() {
         <h1 className="MuiTypography-root MuiTypography-h6 MuiTypography-noWrap css-11shd7s">
           Task Guru 2.0
         </h1>
-        <BadgeAvatar></BadgeAvatar>
+        <BadgeAvatar name={user.name}></BadgeAvatar>
       </div>
     </header>
   );

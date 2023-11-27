@@ -1,4 +1,7 @@
 import { ProjectsContainer } from "../components/Project/index";
+import { QUERY_ME } from "../utils/queries";
+import { useQuery } from "@apollo/client";
+
 /*
  Dummy data - to be removed
  */
@@ -62,6 +65,23 @@ const projects = [
  Dummy data - to be removed
  */
 function Projects() {
+  // Logged user data (me)
+  const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
+  const user = userData?.me || {};
+
+  if (!user.name) {
+    return (
+      <>
+        {!userLoading ? (
+          <h4>
+            You need to be logged in to see this. Use the access links to sign
+            up or log in!
+          </h4>
+        ) : null}
+      </>
+    );
+  }
+
   return (
     <>
       <ProjectsContainer projects={projects}></ProjectsContainer>

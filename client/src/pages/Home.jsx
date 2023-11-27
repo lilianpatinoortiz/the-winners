@@ -8,7 +8,7 @@ import MuiAlert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { useTaskGuruContext } from "../utils/GlobalState";
-import { QUERY_TASKS } from "../utils/queries";
+import { QUERY_TASKS, QUERY_ME } from "../utils/queries";
 import { UPDATE_TASKS } from "../utils/actions";
 
 const Alert = forwardRef(function Alert(props, ref) {
@@ -42,8 +42,6 @@ const chartData = [
   createData("NOV", 9),
   createData("DEC", 1),
 ];
-const totalTasks = 10;
-const completedTasks = 1;
 /*  
 Dummy data - to be removed
  */
@@ -52,6 +50,9 @@ function Home() {
   const [state, dispatch] = useTaskGuruContext();
   const [open, setOpen] = useState(false);
   const { loading, data } = useQuery(QUERY_TASKS);
+  // Logged user data (me)
+  const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
+  const user = userData?.me || {};
 
   useEffect(() => {
     if (data) {
@@ -79,6 +80,20 @@ function Home() {
 
     setOpen(false);
   };
+
+  if (!user.name) {
+    return (
+      <>
+        {!userLoading ? (
+          <h4>
+            You need to be logged in to see this. Use the access links to sign
+            up or log in!
+          </h4>
+        ) : null}
+      </>
+    );
+  }
+
   return (
     <>
       {!loading ? (

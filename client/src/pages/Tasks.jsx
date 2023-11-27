@@ -2,11 +2,15 @@ import { TasksContainer } from "../components/Task/index";
 import { useTaskGuruContext } from "../utils/GlobalState";
 import { useEffect } from "react";
 import { useQuery } from "@apollo/client";
-
-import { QUERY_TASKS } from "../utils/queries";
+import { QUERY_TASKS, QUERY_ME } from "../utils/queries";
 import { UPDATE_TASKS } from "../utils/actions";
 
 function Tasks() {
+  // Logged user data (me)
+  const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
+  const user = userData?.me || {};
+
+  // state for the app
   const [state, dispatch] = useTaskGuruContext();
   const { data } = useQuery(QUERY_TASKS);
 
@@ -19,6 +23,18 @@ function Tasks() {
     }
   }, [data, dispatch]);
 
+  if (!user.name) {
+    return (
+      <>
+        {!userLoading ? (
+          <h4>
+            You need to be logged in to see this. Use the access links to sign
+            up or log in!
+          </h4>
+        ) : null}
+      </>
+    );
+  }
   return (
     <>
       <TasksContainer rows={state.tasks} rowsPerPageProp={10}></TasksContainer>

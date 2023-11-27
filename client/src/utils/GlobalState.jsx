@@ -6,6 +6,7 @@ const { Provider } = TaskGuruContext;
 
 const TaskGuruProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useReducer(reducer, {
+    user: "",
     tasks: [],
     projects: [],
   });
