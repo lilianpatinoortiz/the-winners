@@ -21,7 +21,7 @@ const resolvers = {
       return await Task.findOne({ title });
     },
     tasks: async (parent) => {
-      return await Task.find();
+      return await Task.find().populate("project");
     },
     reminder: async (parent, { id }) => {
       return await Reminder.findOne({ id });

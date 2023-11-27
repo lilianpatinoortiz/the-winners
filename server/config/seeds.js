@@ -19,6 +19,27 @@ db.once("open", async () => {
 
   console.log("users seeded");
 
+  await cleanDB("Project", "projects");
+
+  today = new Date();
+
+  const projects = await Project.insertMany([
+    {
+      title: "Project One",
+      description: "Project One Description",
+      createdDate: new Date(),
+      dueDate: today.setDate(today.getDate() + 1),
+    },
+    {
+      title: "Project Two",
+      description: "Project Two Description",
+      createdDate: new Date(),
+      dueDate: today.setDate(today.getDate() + 3),
+    },
+  ]);
+
+  console.log("projects seeded");
+
   await cleanDB("Task", "tasks");
 
   today = new Date();
@@ -29,7 +50,7 @@ db.once("open", async () => {
     status: "Finished",
     dueDate: new Date(),
     description: "Task One Description",
-    project: "Project One",
+    project: projects[0].title,
     createdDate: today.setDate(today.getDate() + 1),
   });
 
@@ -39,7 +60,7 @@ db.once("open", async () => {
     status: "Finished",
     dueDate: today.setDate(today.getDate() + 20),
     description: "Task Two Description",
-    project: "Project Two",
+    project: projects[0].title,
     createdDate: new Date(),
   });
   await Task.create({
@@ -48,7 +69,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date(),
     description: "Task Three Description",
-    project: "Project One",
+    project: projects[1].title,
     createdDate: new Date(),
   });
 
@@ -58,7 +79,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date(),
     description: "Task Four Description",
-    project: "Project Two",
+    project: projects[1].title,
     createdDate: new Date(),
   });
   await Task.create({
@@ -67,7 +88,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date(),
     description: "Task One Description",
-    project: "Project One",
+    project: projects[1].title,
     createdDate: new Date(),
   });
 
@@ -77,7 +98,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: today.setDate(today.getDate() + 13),
     description: "Task Two Description",
-    project: "Project Two",
+    project: projects[0].title,
     createdDate: new Date(),
   });
   await Task.create({
@@ -86,7 +107,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date(),
     description: "Task Three Description",
-    project: "Project One",
+    project: projects[0].title,
     createdDate: new Date(),
   });
 
@@ -96,7 +117,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date(),
     description: "Task Four Description",
-    project: "Project Two",
+    project: projects[0].title,
     createdDate: new Date(),
   });
   await Task.create({
@@ -105,7 +126,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date(),
     description: "Task One Description",
-    project: "Project One",
+    project: projects[0].title,
     createdDate: new Date(),
   });
 
@@ -115,7 +136,7 @@ db.once("open", async () => {
     status: "In Progress",
     dueDate: new Date(),
     description: "Task Two Description",
-    project: "Project Two",
+    project: projects[0].title,
     createdDate: new Date(),
   });
   await Task.create({
@@ -124,7 +145,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: today.setDate(today.getDate() + 100),
     description: "Task Three Description",
-    project: "Project One",
+    project: projects[1].title,
     createdDate: new Date(),
   });
 
@@ -134,7 +155,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date() + 2,
     description: "Task Four Description",
-    project: "Project Two",
+    project: projects[1].title,
     createdDate: new Date(),
   });
   await Task.create({
@@ -143,7 +164,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date(),
     description: "Task One Description",
-    project: "Project One",
+    project: projects[1].title,
     createdDate: new Date(),
   });
 
@@ -153,7 +174,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date(),
     description: "Task Two Description",
-    project: "Project Two",
+    project: projects[1].title,
     createdDate: new Date(),
   });
   await Task.create({
@@ -162,7 +183,7 @@ db.once("open", async () => {
     status: "Open",
     dueDate: today.setDate(today.getDate() + 1),
     description: "Task Three Description",
-    project: "Project One",
+    project: projects[1].title,
     createdDate: new Date(),
   });
 
@@ -172,30 +193,11 @@ db.once("open", async () => {
     status: "Open",
     dueDate: new Date(),
     description: "Task Four Description",
-    project: "Project Two",
+    project: projects[1].title,
     createdDate: new Date(),
   });
 
   console.log("tasks seeded");
-
-  await cleanDB("Project", "projects");
-
-  today = new Date();
-
-  await Project.create({
-    title: "Project One",
-    description: "Project One Description",
-    createdDate: new Date(),
-    dueDate: today.setDate(today.getDate() + 1),
-  });
-  await Project.create({
-    title: "Project Two",
-    description: "Project Two Description",
-    createdDate: new Date(),
-    dueDate: today.setDate(today.getDate() + 3),
-  });
-
-  console.log("projects seeded");
 
   process.exit();
 });
