@@ -43,7 +43,9 @@ const typeDefs = `
     project: Project,
     task: Task,
     tasks:[Task],
-    reminder: Reminder
+    reminder: Reminder,
+    # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
+    me: User
   }
   type Mutation{
     createUser(name: String!, email: String!, password: String!): Auth

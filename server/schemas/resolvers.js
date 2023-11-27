@@ -23,6 +23,13 @@ const resolvers = {
     reminder: async (parent, { id }) => {
       return await Reminder.findOne({ id });
     },
+    // By adding context to our query, we can retrieve the logged in user without specifically searching for them
+    me: async (parent, args, context) => {
+      if (context.user) {
+        return await User.findOne({ _id: context.user._id });
+      }
+      throw AuthenticationError;
+    },
   },
 
   Mutation: {

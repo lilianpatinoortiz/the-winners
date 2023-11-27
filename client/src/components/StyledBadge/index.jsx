@@ -32,9 +32,11 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-function BadgeAvatar() {
+function BadgeAvatar({ name }) {
   return (
     <Stack direction="row" spacing={2}>
+      <h6>{name}</h6>
+
       <StyledBadge
         overlap="circular"
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
