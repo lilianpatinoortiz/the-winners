@@ -14,7 +14,7 @@ function Tasks() {
 
   // state for the app
   const [state, dispatch] = useTaskGuruContext();
-  const { data } = useQuery(QUERY_TASKS);
+  const { loading, data } = useQuery(QUERY_TASKS);
 
   useEffect(() => {
     if (data) {
@@ -44,7 +44,11 @@ function Tasks() {
   }
   return (
     <>
-      <TasksContainer rows={state.tasks} rowsPerPageProp={10}></TasksContainer>
+      <TasksContainer
+        loading={loading}
+        rows={state.tasks}
+        rowsPerPageProp={10}
+      ></TasksContainer>
     </>
   );
 }
