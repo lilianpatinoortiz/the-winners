@@ -74,6 +74,7 @@ function ProjectsContainer({ loading, projects, tasks }) {
                           <ChartBar
                             data={tasksByProject[project.title].chart}
                             colors={["#00800075", "#ffc10769", "#673ab76e"]}
+                            title="Tasks"
                           ></ChartBar>
                         </>
                       ) : null}

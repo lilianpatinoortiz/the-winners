@@ -9,10 +9,12 @@ import {
   ResponsiveContainer,
   Tooltip,
   Cell,
+  AreaChart,
+  Area,
 } from "recharts";
 import { useTheme } from "@mui/material/styles";
 
-function ChartLine({ data }) {
+function ChartLine({ title, data }) {
   const theme = useTheme();
 
   return (
@@ -45,7 +47,7 @@ function ChartLine({ data }) {
                 ...theme.typography.body1,
               }}
             >
-              No. Tasks Completed
+              {title}
             </Label>
           </YAxis>
           <Tooltip />
@@ -65,7 +67,60 @@ function ChartLine({ data }) {
   );
 }
 
-function ChartBar({ data, colors }) {
+function ChartArea({ title, data }) {
+  const theme = useTheme();
+
+  return (
+    <>
+      <ResponsiveContainer>
+        <AreaChart
+          data={data}
+          margin={{
+            top: 16,
+            right: 16,
+            bottom: 0,
+            left: 24,
+          }}
+        >
+          <XAxis
+            dataKey="key"
+            stroke={theme.palette.text.secondary}
+            style={theme.typography.body2}
+          />
+          <YAxis
+            stroke={theme.palette.text.secondary}
+            style={theme.typography.body2}
+          >
+            <Label
+              angle={270}
+              position="left"
+              style={{
+                textAnchor: "middle",
+                fill: theme.palette.text.primary,
+                ...theme.typography.body1,
+              }}
+            >
+              {title}
+            </Label>
+          </YAxis>
+          <Tooltip />
+          <Area
+            fill={theme.palette.primary.main}
+            isAnimationActive={true}
+            animationDuration={2000}
+            animationEasing="ease"
+            type="monotone"
+            dataKey="value"
+            stroke={theme.palette.primary.main}
+            dot={true}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </>
+  );
+}
+
+function ChartBar({ title, data, colors }) {
   const theme = useTheme();
 
   return (
@@ -98,7 +153,7 @@ function ChartBar({ data, colors }) {
                 ...theme.typography.body1,
               }}
             >
-              Tasks
+              {title}
             </Label>
           </YAxis>
           <Tooltip />
@@ -125,4 +180,4 @@ function ChartBar({ data, colors }) {
   );
 }
 
-export { ChartLine, ChartBar };
+export { ChartLine, ChartBar, ChartArea };

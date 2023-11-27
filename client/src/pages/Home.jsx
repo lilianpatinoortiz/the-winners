@@ -1,5 +1,5 @@
 import { TasksList } from "../components/TasksList";
-import { ChartBar, ChartLine } from "../components/Chart";
+import { ChartBar, ChartLine, ChartArea } from "../components/Chart";
 import { styled } from "@mui/material/styles";
 import { useState, forwardRef, useEffect } from "react";
 import { useQuery } from "@apollo/client";
@@ -116,10 +116,11 @@ function Home() {
           </Snackbar>
           <Grid container spacing={2}>
             <Grid item xs={9} key={2}>
-              <ChartLine
+              <ChartArea
                 data={chartData}
                 colors={["#00800075", "#ffc10769", "#673ab76e"]}
-              ></ChartLine>
+                title="Tasks Status"
+              ></ChartArea>
             </Grid>
             <Grid item xs={3} key={1}>
               <Item key={1} elevation={4}>
