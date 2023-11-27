@@ -1,5 +1,5 @@
 import { TasksList } from "../components/TasksList";
-import { ChartBar } from "../components/Chart";
+import { ChartBar, ChartLine } from "../components/Chart";
 import { styled } from "@mui/material/styles";
 import { useState, forwardRef, useEffect } from "react";
 import { useQuery } from "@apollo/client";
@@ -23,31 +23,6 @@ const Item = styled(Paper)(({ theme }) => ({
   lineHeight: "60px",
 }));
 
-function createData(key, value) {
-  return { key, value };
-}
-
-/*
- Dummy data - to be removed
- */
-const chartData = [
-  createData("JAN", 0),
-  createData("FEB", 1),
-  createData("MAR", 4),
-  createData("APR", 5),
-  createData("MAY", 6),
-  createData("JUN", 7),
-  createData("JUL", 5),
-  createData("AUG", 7),
-  createData("SEP", 7),
-  createData("OCT", 10),
-  createData("NOV", 9),
-  createData("DEC", 1),
-];
-/*  
-Dummy data - to be removed
- */
-
 function Home() {
   const [state, dispatch] = useTaskGuruContext();
   const [open, setOpen] = useState(false);
@@ -55,6 +30,8 @@ function Home() {
   // Logged user data (me)
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
   const user = userData?.me || {};
+  // chart data
+  let chartData = [];
 
   useEffect(() => {
     if (data) {
@@ -65,6 +42,18 @@ function Home() {
     }
   }, [data, dispatch]);
 
+  const createChartData = () => {
+    chartData = [
+      { key: "Finished", value: 0 },
+      { key: "In Progress", value: 0 },
+      { key: "Open", value: 0 },
+    ];
+    state.tasks.map((task) => {
+      chartData.find((item) => item.key == task.status).value += 1;
+    });
+  };
+
+  createChartData();
   const filterCompletedTasks = () => {
     return state.tasks.filter((task) => task.status === "Finished");
   };
@@ -127,7 +116,10 @@ function Home() {
           </Snackbar>
           <Grid container spacing={2}>
             <Grid item xs={9} key={2}>
-              <ChartBar data={chartData}></ChartBar>
+              <ChartLine
+                data={chartData}
+                colors={["#00800075", "#ffc10769", "#673ab76e"]}
+              ></ChartLine>
             </Grid>
             <Grid item xs={3} key={1}>
               <Item key={1} elevation={4}>
