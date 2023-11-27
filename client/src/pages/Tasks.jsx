@@ -8,7 +8,7 @@ import { UPDATE_TASKS } from "../utils/actions";
 
 function Tasks() {
   const [state, dispatch] = useTaskGuruContext();
-  const { loading, data } = useQuery(QUERY_TASKS);
+  const { data } = useQuery(QUERY_TASKS);
 
   useEffect(() => {
     if (data) {

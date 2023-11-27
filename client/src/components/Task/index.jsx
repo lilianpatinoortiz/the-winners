@@ -31,7 +31,6 @@ function Task() {
 }
 
 function TasksContainer({ rows, rowsPerPageProp }) {
-  console.log(rows);
   return (
     <>
       <Grid container spacing={2}>

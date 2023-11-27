@@ -24,6 +24,44 @@ db.once("open", async () => {
   await Task.create({
     title: "Task One",
     priority: 3,
+    status: "Finished",
+    dueDate: new Date(),
+    description: "Task One Description",
+    project: "Project One",
+    createdDate: new Date(),
+  });
+
+  await Task.create({
+    title: "Task Two",
+    priority: 1,
+    status: "Finished",
+    dueDate: new Date(),
+    description: "Task Two Description",
+    project: "Project Two",
+    createdDate: new Date(),
+  });
+  await Task.create({
+    title: "Task Three",
+    priority: 2,
+    status: "Open",
+    dueDate: new Date(),
+    description: "Task Three Description",
+    project: "Project One",
+    createdDate: new Date(),
+  });
+
+  await Task.create({
+    title: "Task Four",
+    priority: 3,
+    status: "Open",
+    dueDate: new Date(),
+    description: "Task Four Description",
+    project: "Project Two",
+    createdDate: new Date(),
+  });
+  await Task.create({
+    title: "Task One",
+    priority: 3,
     status: "Open",
     dueDate: new Date(),
     description: "Task One Description",
@@ -35,6 +73,44 @@ db.once("open", async () => {
     title: "Task Two",
     priority: 1,
     status: "Open",
+    dueDate: new Date(),
+    description: "Task Two Description",
+    project: "Project Two",
+    createdDate: new Date(),
+  });
+  await Task.create({
+    title: "Task Three",
+    priority: 2,
+    status: "Open",
+    dueDate: new Date(),
+    description: "Task Three Description",
+    project: "Project One",
+    createdDate: new Date(),
+  });
+
+  await Task.create({
+    title: "Task Four",
+    priority: 3,
+    status: "Open",
+    dueDate: new Date(),
+    description: "Task Four Description",
+    project: "Project Two",
+    createdDate: new Date(),
+  });
+  await Task.create({
+    title: "Task One",
+    priority: 3,
+    status: "Open",
+    dueDate: new Date(),
+    description: "Task One Description",
+    project: "Project One",
+    createdDate: new Date(),
+  });
+
+  await Task.create({
+    title: "Task Two",
+    priority: 1,
+    status: "In Progress",
     dueDate: new Date(),
     description: "Task Two Description",
     project: "Project Two",

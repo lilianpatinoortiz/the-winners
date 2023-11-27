@@ -62,6 +62,10 @@ function Home() {
     }
   }, [data, dispatch]);
 
+  const filterCompletedTasks = () => {
+    return state.tasks.filter((task) => task.status === "Finished");
+  };
+
   const handleClick = () => {
     setOpen(true);
   };
@@ -97,7 +101,7 @@ function Home() {
                 <div id="task-completed">
                   <h3>Tasks Completed</h3>
                   <label>
-                    {completedTasks}/{totalTasks}
+                    {filterCompletedTasks().length}/{state.tasks.length}
                   </label>
                 </div>
               </Item>

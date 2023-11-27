@@ -30,7 +30,7 @@ const taskSchema = new Schema({
     type: String,
     required: true,
     default: "Open",
-    enum: ["Open", "In Progress", "Completed"],
+    enum: ["Open", "In Progress", "Finished"],
   },
   project: {
     type: String,
