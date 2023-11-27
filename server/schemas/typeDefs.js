@@ -11,11 +11,13 @@ const typeDefs = `
 
   type Task {
     _id: ID
+    title: String
     description: String
     createdDate: String
     dueDate: String
     priority: Int
     status: String
+    project: String
     reminders: [Reminder]
   }
 
@@ -40,6 +42,7 @@ const typeDefs = `
     user(email: String!): User,
     project: Project,
     task: Task,
+    tasks:[Task],
     reminder: Reminder
   }
   type Mutation{

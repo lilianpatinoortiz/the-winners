@@ -32,6 +32,10 @@ const taskSchema = new Schema({
     default: "Open",
     enum: ["Open", "In Progress", "Completed"],
   },
+  project: {
+    type: String,
+    required: true,
+  },
   reminders: [Reminder.schema],
 });
 

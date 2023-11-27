@@ -17,33 +17,36 @@ const resolvers = {
     task: async (parent, { id, title }) => {
       return await Task.findOne({ title });
     },
+    tasks: async (parent) => {
+      return await Task.find();
+    },
     reminder: async (parent, { id }) => {
       return await Reminder.findOne({ id });
     },
   },
-  
-  Mutation: {
-    createUser: async(_,args)=> {
-      const user = await User.create(args)
-      const token= signToken(user)
-      return {token, user}
-  },
-    login: async(_,args)=>{
-        const user = await User.findOne({ $or: [{ name: args.name }, { email: args.email }] });
-        if (!user) {
-            throw GraphQLError("User not authenticated!")
-        }
-    
-        const correctPw = await user.isCorrectPassword(args.password);
-    
-        if (!correctPw) {
-            throw GraphQLError("User not authenticated!")
-        }
-        const token = signToken(user);
-        return { token, user };
 
+  Mutation: {
+    createUser: async (_, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+      return { token, user };
     },
-    
+    login: async (_, args) => {
+      const user = await User.findOne({
+        $or: [{ name: args.name }, { email: args.email }],
+      });
+      if (!user) {
+        throw GraphQLError("User not authenticated!");
+      }
+
+      const correctPw = await user.isCorrectPassword(args.password);
+
+      if (!correctPw) {
+        throw GraphQLError("User not authenticated!");
+      }
+      const token = signToken(user);
+      return { token, user };
+    },
   },
 };
 // Export resolvers
