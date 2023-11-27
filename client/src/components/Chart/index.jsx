@@ -54,7 +54,7 @@ function ChartLine({ title, data }) {
           <Line
             fill={theme.palette.primary.main}
             isAnimationActive={true}
-            animationDuration={2000}
+            animationDuration={3000}
             animationEasing="ease"
             type="monotone"
             dataKey="value"
@@ -107,7 +107,7 @@ function ChartArea({ title, data }) {
           <Area
             fill={theme.palette.primary.main}
             isAnimationActive={true}
-            animationDuration={2000}
+            animationDuration={3000}
             animationEasing="ease"
             type="monotone"
             dataKey="value"

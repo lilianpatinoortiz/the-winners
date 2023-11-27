@@ -1416,3 +1416,8 @@ body::backdrop {
 a {
   cursor: pointer;
 }
+
+#home-title {
+  width: 100%;
+  text-align: center;
+}

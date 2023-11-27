@@ -105,6 +105,9 @@ function Home() {
     <>
       {!loading ? (
         <>
+          <div id="home-title">
+            <h2> Welcome {user.name}</h2>
+          </div>
           <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
             <Alert
               onClose={handleClose}
@@ -125,7 +128,7 @@ function Home() {
             <Grid item xs={3} key={1}>
               <Item key={1} elevation={4}>
                 <div id="task-completed">
-                  <h3>Tasks Completed</h3>
+                  <h5>Tasks Completed</h5>
                   <label>
                     {filterCompletedTasks().length}/{state.tasks.length}
                   </label>

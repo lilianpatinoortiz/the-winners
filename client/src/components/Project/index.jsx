@@ -65,7 +65,7 @@ function ProjectsContainer({ loading, projects, tasks }) {
           {rows.length ? (
             <Grid container spacing={2} id="projects">
               {rows.map((project) => (
-                <Grid item xs={8} md={6} key={project.title}>
+                <Grid item xs={12} md={6} lg={6} key={project.title}>
                   <Item key={project._id} elevation={4}>
                     <div id="project-box">
                       <h2>{project.title}</h2>
