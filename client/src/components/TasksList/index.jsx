@@ -359,10 +359,14 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
                       {row.priority}
                     </TableCell>
                     <TableCell align="right">{row.status}</TableCell>
-                    <TableCell align="right">{row.dueDate}</TableCell>
+                    <TableCell align="right">
+                      {new Date(parseInt(row.dueDate)).toLocaleDateString()}
+                    </TableCell>
                     <TableCell align="right">{row.description}</TableCell>
                     <TableCell align="right">{row.project}</TableCell>
-                    <TableCell align="right">{row.createdDate}</TableCell>
+                    <TableCell align="right">
+                      {new Date(parseInt(row.createdDate)).toLocaleDateString()}
+                    </TableCell>
                   </TableRow>
                 );
               })}
