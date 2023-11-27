@@ -1,5 +1,5 @@
 const db = require("./connection");
-const { User, Task } = require("../models");
+const { User, Task, Project } = require("../models");
 const cleanDB = require("./cleanDB");
 
 db.once("open", async () => {
@@ -177,6 +177,25 @@ db.once("open", async () => {
   });
 
   console.log("tasks seeded");
+
+  await cleanDB("Project", "projects");
+
+  today = new Date();
+
+  await Project.create({
+    title: "Project One",
+    description: "Project One Description",
+    createdDate: new Date(),
+    dueDate: today.setDate(today.getDate() + 1),
+  });
+  await Project.create({
+    title: "Project Two",
+    description: "Project Two Description",
+    createdDate: new Date(),
+    dueDate: today.setDate(today.getDate() + 3),
+  });
+
+  console.log("projects seeded");
 
   process.exit();
 });

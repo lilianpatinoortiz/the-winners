@@ -110,6 +110,7 @@ function Home() {
       </>
     );
   }
+  console.log("User logged in: " + user?.name + " (" + user?.email + ")");
 
   return (
     <>
