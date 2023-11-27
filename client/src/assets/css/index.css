@@ -1368,12 +1368,13 @@ body::backdrop {
 
 #task-completed {
   padding: 20px;
-  height: 100%;
+  min-height: 200px;
 }
 
 #task-completed > label {
   font-size: 70px;
   font-family: fantasy;
+  padding-top: 30px;
 }
 
 #project-box {

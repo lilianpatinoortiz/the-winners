@@ -8,6 +8,7 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { TaskGuruProvider } from "./utils/GlobalState";
 
 // Which endpoint to sent requests to
 const httpLink = createHttpLink({
@@ -34,16 +35,18 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Header />
-      <Navbar />
-      <main className="MuiBox-root css-fxbtpg">
-        <div className="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-i6s8oy"></div>
-        <div className="MuiContainer-root MuiContainer-maxWidthLg css-1oifrf6">
-          <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1h77wgb">
-            <Outlet />
+      <TaskGuruProvider>
+        <Header />
+        <Navbar />
+        <main className="MuiBox-root css-fxbtpg">
+          <div className="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-i6s8oy"></div>
+          <div className="MuiContainer-root MuiContainer-maxWidthLg css-1oifrf6">
+            <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1h77wgb">
+              <Outlet />
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </TaskGuruProvider>
     </ApolloProvider>
   );
 }

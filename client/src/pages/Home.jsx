@@ -2,10 +2,14 @@ import { TasksList } from "../components/TasksList";
 import { ChartBar } from "../components/Chart";
 import { styled } from "@mui/material/styles";
 import { useState, forwardRef, useEffect } from "react";
+import { useQuery } from "@apollo/client";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import { useTaskGuruContext } from "../utils/GlobalState";
+import { QUERY_TASKS } from "../utils/queries";
+import { UPDATE_TASKS } from "../utils/actions";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -60,7 +64,7 @@ const data = [
 ];
 const totalTasks = 10;
 const completedTasks = 1;
-const rows = [
+const tasks = [
   createTask(
     1,
     "Task 1",
@@ -148,7 +152,23 @@ Dummy data - to be removed
  */
 
 function Home() {
+  const [state, dispatch] = useTaskGuruContext();
   const [open, setOpen] = useState(false);
+  //const { loading, data: tasks } = useQuery(QUERY_TASKS);
+  console.log(tasks);
+
+  // useEffect(() => {
+  //   if (tasks) {
+  //     dispatch({
+  //       type: UPDATE_TASKS,
+  //       tasks: data.tasks,
+  //     });
+  //   }
+  // }, [tasks, dispatch]);
+
+  function filterTasks() {
+    return state.tasks;
+  }
 
   const handleClick = () => {
     setOpen(true);
@@ -177,7 +197,7 @@ function Home() {
         <Grid item xs={3} key={1}>
           <Item key={1} elevation={4}>
             <div id="task-completed">
-              <h2>Tasks Completed</h2>
+              <h3>Tasks Completed</h3>
               <label>
                 {completedTasks}/{totalTasks}
               </label>
@@ -189,7 +209,7 @@ function Home() {
             <TasksList
               rowsPerPageProp={5}
               isBackgroundColorEnabled={false}
-              rows={rows}
+              rows={tasks}
             ></TasksList>
           </Item>
         </Grid>
