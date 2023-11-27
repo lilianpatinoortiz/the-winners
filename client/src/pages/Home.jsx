@@ -154,8 +154,9 @@ Dummy data - to be removed
 function Home() {
   const [state, dispatch] = useTaskGuruContext();
   const [open, setOpen] = useState(false);
-  //const { loading, data: tasks } = useQuery(QUERY_TASKS);
-  console.log(tasks);
+  // const { loading, data: tasks } = useQuery(QUERY_TASKS);
+  // console.log(loading);
+  // console.log(tasks);
 
   // useEffect(() => {
   //   if (tasks) {

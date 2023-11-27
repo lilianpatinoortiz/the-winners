@@ -22,17 +22,10 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_TASKS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
+  query getTasks {
+    tasks {
       _id
-      name
-      description
-      price
-      quantity
-      image
-      category {
-        _id
-      }
+      title
     }
   }
 `;
