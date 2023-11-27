@@ -98,7 +98,7 @@ function ChartBar({ data, colors }) {
                 ...theme.typography.body1,
               }}
             >
-              No. Tasks Completed
+              Tasks
             </Label>
           </YAxis>
           <Tooltip />

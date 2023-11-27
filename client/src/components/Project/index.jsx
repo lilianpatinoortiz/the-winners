@@ -9,12 +9,41 @@ const createProject = () => {
   console.log("create project");
 };
 
-function ProjectsContainer({ loading, projects }) {
+function ProjectsContainer({ loading, projects, tasks }) {
   const [rows, setRows] = useState(projects);
+  const [tasksData, setTasks] = useState(tasks);
+  const [tasksByProject] = useState({});
 
   useEffect(() => {
     setRows(projects);
   }, [rows, projects]);
+
+  useEffect(() => {
+    setTasks(tasks);
+  }, [tasksData, tasks]);
+
+  /* The following code should be improved */
+  projects.forEach((project) => {
+    tasksByProject[project.title] = tasks.filter(
+      (task) => task.project == project.title
+    );
+  });
+  for (const project in tasksByProject) {
+    let tasksChart = tasksByProject[project];
+    tasksChart["chart"] = [
+      { key: "Finished", value: 0 },
+      { key: "In Progress", value: 0 },
+      { key: "Open", value: 0 },
+    ];
+    for (const task in tasksChart) {
+      if (tasksChart[task].status) {
+        tasksChart.chart.find(
+          (item) => item.key == tasksChart[task].status
+        ).value += 1;
+      }
+    }
+  }
+  /* The code above should be improved  */
 
   return (
     <>
@@ -36,14 +65,18 @@ function ProjectsContainer({ loading, projects }) {
           {rows.length ? (
             <Grid container spacing={2} id="projects">
               {rows.map((project) => (
-                <Grid item xs={8} md={4} key={project.title}>
+                <Grid item xs={8} md={6} key={project.title}>
                   <Item key={project._id} elevation={4}>
                     <div id="project-box">
                       <h2>{project.title}</h2>
-                      {/* <ChartBar
-                        data={project.data}
-                        colors={["#00800075", "#ffc10769", "#673ab76e"]}
-                      ></ChartBar> */}
+                      {tasks.length ? (
+                        <>
+                          <ChartBar
+                            data={tasksByProject[project.title].chart}
+                            colors={["#00800075", "#ffc10769", "#673ab76e"]}
+                          ></ChartBar>
+                        </>
+                      ) : null}
                       <hr></hr>
                       <Button>See more</Button>
                     </div>
