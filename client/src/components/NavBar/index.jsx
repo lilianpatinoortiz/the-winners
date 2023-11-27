@@ -1,65 +1,67 @@
-// Bringing in the required import from 'react-router-dom'
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import HomeIcon from "@mui/icons-material/Home";
-import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
+import WorkIcon from "@mui/icons-material/Work";
+import { useState } from "react";
+import LoginForm from "../Login/index";
+import { Modal } from "react-bootstrap";
+import SignupForm from "../Signup/index";
+import { Link } from "@mui/material";
 
 function Navbar() {
-  // The Navbar UI component will render each of the Link elements in the links prop
-  return (
-    <Nav
-      accessLinks={[
-        <Button key={0} variant="text" href="/login">
-          Login
-        </Button>,
-        <Button key={1} variant="text" href="/signup">
-          Signup
-        </Button>,
-      ]}
-      links={[
-        <Button key={2} href="/">
-          <ListItemAvatar>
-            <Avatar>
-              <HomeIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Home" />
-        </Button>,
-        <Button key={3} href="/myguru">
-          <ListItemAvatar>
-            <Avatar>
-              <AccessTimeFilledIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="My Guru" />
-        </Button>,
-        <Button key={4} href="/kanban">
-          <ListItemAvatar>
-            <Avatar>
-              <CalendarMonthIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Kanban" />
-        </Button>,
-        <Button key={5} href="/tasks">
-          <ListItemAvatar>
-            <Avatar>
-              <TaskAltIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Tasks" />
-        </Button>,
-      ]}
-    ></Nav>
-  );
-}
+  const [show, setShow] = useState({ login: false, signup: false });
 
-function Nav({ links, accessLinks }) {
+  const handleClose = () => setShow({ login: false, signup: false });
+  const handleShowLogin = () => setShow({ login: true, signup: false });
+  const handleShowSignup = () => setShow({ login: false, signup: true });
+
+  let accessLinks = [
+    <Link key={0} variant="contained" onClick={handleShowLogin} id="login">
+      Login
+    </Link>,
+    <Link key={3} variant="contained" onClick={handleShowSignup} id="signup">
+      Signup
+    </Link>,
+  ];
+  let links = [
+    <Button key={2} href="/">
+      <ListItemAvatar>
+        <Avatar>
+          <HomeIcon />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText primary="Home" />
+    </Button>,
+    <Button key={3} href="/kanban">
+      <ListItemAvatar>
+        <Avatar>
+          <CalendarMonthIcon />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText primary="Kanban" />
+    </Button>,
+    <Button key={4} href="/projects">
+      <ListItemAvatar>
+        <Avatar>
+          <WorkIcon />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText primary="Projects" />
+    </Button>,
+    <Button key={5} href="/tasks">
+      <ListItemAvatar>
+        <Avatar>
+          <TaskAltIcon />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText primary="Tasks" />
+    </Button>,
+  ];
   return (
     <>
       <div className="MuiDrawer-root MuiDrawer-docked css-1fqw99a">
@@ -97,9 +99,27 @@ function Nav({ links, accessLinks }) {
             </Stack>
           </div>
         </div>
+        <div id="modals">
+          <Modal show={show.login} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Login</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <LoginForm />
+            </Modal.Body>
+          </Modal>
+          <Modal show={show.signup} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Signup</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <SignupForm />
+            </Modal.Body>
+          </Modal>
+        </div>
       </div>
     </>
   );
 }
 
-export { Navbar, Nav };
+export { Navbar };

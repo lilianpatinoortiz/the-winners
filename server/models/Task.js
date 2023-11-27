@@ -23,14 +23,18 @@ const taskSchema = new Schema({
     type: Number,
     required: true,
     default: 0,
-    min: 0,
-    max: 2,
+    min: 1,
+    max: 3,
   },
   status: {
     type: String,
     required: true,
     default: "Open",
-    enum: ["Open", "In Progress", "Completed"],
+    enum: ["Open", "In Progress", "Finished"],
+  },
+  project: {
+    type: String,
+    required: true,
   },
   reminders: [Reminder.schema],
 });

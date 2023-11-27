@@ -8,11 +8,14 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { TaskGuruProvider } from "./utils/GlobalState";
 
+// Which endpoint to sent requests to
 const httpLink = createHttpLink({
   uri: "/graphql",
 });
 
+// sets the token into the header of every request. Passing user authentication if it exists
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
   return {
@@ -23,6 +26,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// Create the Apollo Client allowing the app to use hooks for sending requests
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
@@ -32,8 +36,8 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <ApolloProvider client={client}>
+    <ApolloProvider client={client}>
+      <TaskGuruProvider>
         <Header />
         <Navbar />
         <main className="MuiBox-root css-fxbtpg">
@@ -44,8 +48,8 @@ function App() {
             </div>
           </div>
         </main>
-      </ApolloProvider>
-    </>
+      </TaskGuruProvider>
+    </ApolloProvider>
   );
 }
 

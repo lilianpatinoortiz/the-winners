@@ -1368,10 +1368,51 @@ body::backdrop {
 
 #task-completed {
   padding: 20px;
-  height: 100%;
+  min-height: 200px;
 }
 
 #task-completed > label {
   font-size: 70px;
   font-family: fantasy;
+  padding-top: 30px;
+}
+
+#project-box {
+  min-height: 300px;
+  min-width: 300px;
+  text-align: center;
+
+  > h2 {
+    padding-top: 20px;
+  }
+}
+
+#tasks-grid {
+  padding-top: 50px;
+}
+
+.priority-1 {
+  background-color: #ff000049;
+}
+.priority-2 {
+  background-color: #ffc1073e;
+}
+.priority-3 {
+  background-color: #8bc34a80;
+}
+
+#login,
+#signup {
+  cursor: pointer;
+}
+
+.modal-dialog {
+  padding-top: 10%;
+}
+#projects {
+  padding-top: 20px;
+}
+
+a {
+  cursor: pointer;
 }
