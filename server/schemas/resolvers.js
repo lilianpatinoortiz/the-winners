@@ -1,4 +1,5 @@
 // Import models
+const { GraphQLError } = require("graphql");
 const { User, Project, Task, Reminder } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 
@@ -19,6 +20,30 @@ const resolvers = {
     reminder: async (parent, { id }) => {
       return await Reminder.findOne({ id });
     },
+  },
+  
+  Mutation: {
+    createUser: async(_,args)=> {
+      const user = await User.create(args)
+      const token= signToken(user)
+      return {token, user}
+  },
+    login: async(_,args)=>{
+        const user = await User.findOne({ $or: [{ name: args.name }, { email: args.email }] });
+        if (!user) {
+            throw GraphQLError("User not authenticated!")
+        }
+    
+        const correctPw = await user.isCorrectPassword(args.password);
+    
+        if (!correctPw) {
+            throw GraphQLError("User not authenticated!")
+        }
+        const token = signToken(user);
+        return { token, user };
+
+    },
+    
   },
 };
 // Export resolvers

@@ -40,12 +40,15 @@ const typeDefs = `
   # These are the entry points, controlls the data the query has access to.
   # Ex. user query has access to a User model data
   type Query {
-    user: User,
+    user(email: String!): User,
     project: Project,
     task: Task,
     reminder: Reminder
   }
-
+  type Mutation{
+    createUser(name: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+  
 
   type Auth {
     token: ID

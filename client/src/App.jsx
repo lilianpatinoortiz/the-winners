@@ -1,38 +1,50 @@
-import { useState } from 'react'
-import ProjectList from './components/ProjectList';
-import ProjectForm from './components/ProjectForm';
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import './App.css'
+import { Outlet } from "react-router-dom";
+import { Header } from "./components/Header";
+import { Navbar } from "./components/NavBar";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("id_token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <ApolloProvider client={client}>
+        <Header />
+        <Navbar />
+        <main className="MuiBox-root css-fxbtpg">
+          <div className="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-i6s8oy"></div>
+          <div className="MuiContainer-root MuiContainer-maxWidthLg css-1oifrf6">
+            <div className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1h77wgb">
+              <Outlet />
+            </div>
+          </div>
+        </main>
+      </ApolloProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
