@@ -23,8 +23,8 @@ const taskSchema = new Schema({
     type: Number,
     required: true,
     default: 0,
-    min: 0,
-    max: 2,
+    min: 1,
+    max: 3,
   },
   status: {
     type: String,

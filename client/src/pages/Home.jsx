@@ -24,27 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
 function createData(key, value) {
   return { key, value };
 }
-function createTask(
-  id,
-  title,
-  dueDate,
-  priority,
-  status,
-  description,
-  project,
-  createdDate
-) {
-  return {
-    id,
-    title,
-    dueDate,
-    priority,
-    status,
-    description,
-    project,
-    createdDate,
-  };
-}
+
 /*
  Dummy data - to be removed
  */

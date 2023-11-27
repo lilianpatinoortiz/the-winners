@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { TasksList } from "../TasksList";
+import { rootShouldForwardProp } from "@mui/material/styles/styled";
 
 const createTask = () => {
   console.log("create task");
@@ -30,6 +31,7 @@ function Task() {
 }
 
 function TasksContainer({ rows, rowsPerPageProp }) {
+  console.log(rows);
   return (
     <>
       <Grid container spacing={2}>
@@ -48,7 +50,7 @@ function TasksContainer({ rows, rowsPerPageProp }) {
       {rows.length ? (
         <Grid container spacing={2} id="tasks-grid">
           <TasksList
-            rows={rows}
+            tasks={rows}
             rowsPerPageProp={rowsPerPageProp}
             isBackgroundColorEnabled={true}
           ></TasksList>
