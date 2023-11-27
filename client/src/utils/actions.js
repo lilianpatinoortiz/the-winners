@@ -1,1 +1,2 @@
 export const UPDATE_TASKS = "UPDATE_TASKS";
+export const UPDATE_PROJECTS = "UPDATE_PROJECTS";

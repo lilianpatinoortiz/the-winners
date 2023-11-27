@@ -14,6 +14,9 @@ const resolvers = {
     project: async (parent, { id, title }) => {
       return await Project.findOne({ title });
     },
+    projects: async (parent) => {
+      return await Project.find();
+    },
     task: async (parent, { id, title }) => {
       return await Task.findOne({ title });
     },

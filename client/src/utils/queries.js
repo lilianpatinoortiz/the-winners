@@ -25,6 +25,18 @@ export const QUERY_TASKS = gql`
   }
 `;
 
+export const QUERY_PROJECTS = gql`
+  {
+    projects {
+      _id
+      title
+      description
+      dueDate
+      createdDate
+    }
+  }
+`;
+
 export const QUERY_ME = gql`
   {
     me {

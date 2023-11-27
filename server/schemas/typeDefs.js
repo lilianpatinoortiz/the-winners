@@ -23,6 +23,7 @@ const typeDefs = `
 
   type Project {
     _id: ID
+    title: String
     description: String
     createdDate: String
     dueDate: String 
@@ -41,6 +42,7 @@ const typeDefs = `
   type Query {
     user(email: String!): User,
     project: Project,
+    projects:[Project],
     task: Task,
     tasks:[Task],
     reminder: Reminder,

@@ -1,12 +1,16 @@
+import { useEffect } from "react";
 import { ProjectsContainer } from "../components/Project/index";
-import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import { QUERY_PROJECTS, QUERY_ME } from "../utils/queries";
+import { UPDATE_PROJECTS } from "../utils/actions";
+import { useTaskGuruContext } from "../utils/GlobalState";
+
 /*
  Dummy data - to be removed
  */
-const projects = [
+const projects2 = [
   {
     title: "Project 1",
     description: "Description 1",
@@ -70,6 +74,19 @@ function Projects() {
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
   const user = userData?.me || {};
 
+  // state for the app
+  const [state, dispatch] = useTaskGuruContext();
+  const { loading, data } = useQuery(QUERY_PROJECTS);
+
+  useEffect(() => {
+    if (data) {
+      dispatch({
+        type: UPDATE_PROJECTS,
+        projects: data.projects,
+      });
+    }
+  }, [data, dispatch]);
+
   if (!user.name) {
     return (
       <>
@@ -90,7 +107,10 @@ function Projects() {
 
   return (
     <>
-      <ProjectsContainer projects={projects}></ProjectsContainer>
+      <ProjectsContainer
+        loading={loading}
+        projects={state.projects}
+      ></ProjectsContainer>
     </>
   );
 }
