@@ -10,6 +10,8 @@ import Paper from "@mui/material/Paper";
 import { useTaskGuruContext } from "../utils/GlobalState";
 import { QUERY_TASKS, QUERY_ME } from "../utils/queries";
 import { UPDATE_TASKS } from "../utils/actions";
+import Skeleton from "@mui/material/Skeleton";
+import Box from "@mui/material/Box";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -85,10 +87,25 @@ function Home() {
     return (
       <>
         {!userLoading ? (
-          <h4>
-            You need to be logged in to see this. Use the access links to sign
-            up or log in!
-          </h4>
+          <>
+            <h4>
+              You need to be logged in to see this. Use the access links to sign
+              up or log in!
+            </h4>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box sx={{ margin: 1 }}>
+                <Skeleton variant="rectangular" width={900} height={200} />
+              </Box>
+              <Box sx={{ width: "100%" }}>
+                <Skeleton variant="rectangular" width={300} height={200} />
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box sx={{ margin: 1 }}>
+                <Skeleton variant="rectangular" width={1200} height={500} />
+              </Box>
+            </Box>
+          </>
         ) : null}
       </>
     );
