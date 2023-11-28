@@ -258,6 +258,7 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
   };
 
   const handleClick = (event, id) => {
+    console.log(id);
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
@@ -315,13 +316,13 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
+                const isItemSelected = isSelected(index);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={(event) => handleClick(event, index)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -331,6 +332,7 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
+                        key={index}
                         color="primary"
                         checked={isItemSelected}
                         inputProps={{
