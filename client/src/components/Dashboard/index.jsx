@@ -17,6 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const Dashboard = ({
+  title,
   loading,
   user,
   open,
@@ -30,7 +31,7 @@ const Dashboard = ({
       {!loading ? (
         <>
           <div id="home-title">
-            <h3> Welcome {user.name}</h3>
+            <h3>{title ? title : "Welcome" + user.name}</h3>
           </div>
           <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
             <Alert

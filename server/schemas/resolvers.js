@@ -12,7 +12,7 @@ const resolvers = {
       return await User.findOne({ email });
     },
     project: async (parent, { id, title }) => {
-      return await Project.findOne({ title });
+      return await Project.findOne({ id });
     },
     projects: async (parent) => {
       return await Project.find();

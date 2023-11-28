@@ -79,7 +79,9 @@ function ProjectsContainer({ loading, projects, tasks }) {
                         </>
                       ) : null}
                       <hr></hr>
-                      <Button>See more</Button>
+                      <Button href={`/singleproject/${project._id}`}>
+                        See more
+                      </Button>
                     </div>
                   </Item>
                 </Grid>

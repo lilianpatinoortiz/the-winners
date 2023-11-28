@@ -11,6 +11,7 @@ import SignupForm from "./components/Signup/index.jsx";
 import Projects from "./pages/Projects.jsx";
 import Tasks from "./pages/Tasks.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { SingleProject } from "./components/SingleProject/index.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignupForm />,
+      },
+      {
+        path: "/singleproject/:id",
+        element: <SingleProject />,
       },
     ],
   },
