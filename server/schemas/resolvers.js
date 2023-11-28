@@ -68,6 +68,9 @@ const resolvers = {
       const project = await Project.create(args);
       return project;
     },
+    addTask: async (_, args) => {
+      const task = await Task.create(args);
+      return task;},
   },
 };
 // Export resolvers
