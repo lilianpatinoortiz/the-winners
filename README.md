@@ -21,7 +21,9 @@ This project involves a comprehensive Task Management Application that aims to s
 
 ## Deployed Site
 
+- LINK TO DEPLOYED SITE
 
+![Alt text](<images/Task Guru 2.0.png>)
 
 ## Description
 
@@ -85,8 +87,8 @@ Clone the [repository](https://github.com/lilianpatinoortiz/the-winners) to your
 - [Kowther Kahin](https://github.com/Kowther7)
 - [Frankie Ramirez](https://github.com/Frankieramirez72)
 - [Nina Mahdawe](https://github.com/Ninamahdawe)
-
+- [Devon Hua](https://github.com/devonforyou)
 
 ## License
 
-This project is open source and available under the [MIT License](./LICENSE)!
+This project is open source and available under the [MIT License](./LICENSE)
