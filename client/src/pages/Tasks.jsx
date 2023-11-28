@@ -27,6 +27,11 @@ function Tasks() {
     }
   }, [data, dispatch]);
 
+  // Get my tasks
+  const filterMyTasks = () => {
+    return state.tasks.filter((task) => task.userid === user._id);
+  };
+
   // If the user is not logged in
   if (!user.name) {
     return (
@@ -50,7 +55,7 @@ function Tasks() {
     <>
       <TasksContainer
         loading={loading}
-        rows={state.tasks}
+        rows={filterMyTasks()}
         rowsPerPageProp={10}
       ></TasksContainer>
     </>

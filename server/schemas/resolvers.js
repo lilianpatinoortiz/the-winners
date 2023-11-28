@@ -12,7 +12,6 @@ const resolvers = {
       return await User.findOne({ email });
     },
     project: async (parent, { id }) => {
-      console.log(id);
       return await Project.findOne({ _id: id });
     },
     projects: async (parent) => {
@@ -23,6 +22,16 @@ const resolvers = {
     },
     tasks: async (parent) => {
       return await Task.find().populate("project");
+    },
+    myTasks: async (parent, { userid }) => {
+      const params = {};
+      if (userid) {
+        params.userid = userid;
+      }
+      return await Task.find(params);
+    },
+    myProjects: async (parent, { userid }) => {
+      return await Project.find({ userid: userid });
     },
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
     me: async (parent, args, context) => {

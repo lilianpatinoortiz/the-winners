@@ -12,7 +12,7 @@ const typeDefs = `
     dueDate: String
     priority: Int
     status: String
-    userid: User
+    userid: String # User
     project: String
   }
 
@@ -22,9 +22,10 @@ const typeDefs = `
     description: String
     createdDate: String
     dueDate: String 
-    userid: User
+    userid: String # User
     tasks: [Task]
   }
+
   type User {
     _id: ID
     name: String
@@ -41,13 +42,15 @@ const typeDefs = `
     projects:[Project],
     task: Task,
     tasks:[Task],
+    myProjects (userid: String!): [Project],
+    myTasks (userid: String!): [Task],
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
     me: User
   }
+
   type Mutation{
     createUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-  
   }
   
   `;
