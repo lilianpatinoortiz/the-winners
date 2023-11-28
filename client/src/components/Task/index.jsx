@@ -60,7 +60,6 @@ function TaskForm() {
       project: "",
       userid: user._id,
     });
-    navigate("/"); // Redirect user to home page
   };
 
   return (

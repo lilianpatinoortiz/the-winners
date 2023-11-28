@@ -22,6 +22,127 @@ import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { useState, useMemo, useEffect } from "react";
+import { Modal } from "react-bootstrap";
+import { useMutation, useQuery } from "@apollo/client";
+import { QUERY_ME } from "../../utils/queries";
+import { useNavigate } from "react-router-dom";
+import { ADD_TASK } from "../../utils/mutations";
+import Button from "@mui/material/Button";
+
+function EditTaskForm() {
+  const navigate = useNavigate();
+  // Logged user data (me)
+  const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
+  const user = userData?.me || {};
+  const [task, setTask] = useState({
+    title: "",
+    description: "",
+    createdDate: new Date(),
+    dueDate: new Date(),
+    priority: 1,
+    status: "Open",
+    project: "",
+    userid: user._id,
+  });
+  const [editTask, { error }] = useMutation(ADD_TASK);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setTask({ ...task, [name]: value });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    try {
+      const { data } = await addTask({
+        variables: { ...task },
+      });
+      console.log("Edit created", data.editTask);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+
+    setTask({
+      title: "",
+      description: "",
+      createdDate: new Date(),
+      dueDate: new Date(),
+      priority: 1,
+      status: "Open",
+      project: "",
+      userid: user._id,
+    });
+  };
+
+  return (
+    <div>
+      <form
+        className="flex-row justify-center justify-space-between-md align-center"
+        onSubmit={handleFormSubmit}
+      >
+        <label>Title</label>
+        <input
+          placeholder="title"
+          type="text"
+          name="title"
+          value={task.title}
+          onChange={(e) => setTask({ ...task, title: e.target.value })}
+        />
+        <label>Description</label>
+        <input
+          placeholder="description"
+          type="text"
+          name="description"
+          onChange={(e) =>
+            setTaskFormData({ ...task, description: e.target.value })
+          }
+          value={task.description}
+        />
+        <label>Due Date</label>
+        <input
+          placeholder="due date"
+          type="date"
+          onChange={(e) =>
+            setTaskFormData({ ...task, dueDate: e.target.value })
+          }
+          value={task.dueDate}
+        />
+        <label>Prority</label>
+        <input
+          placeholder="prority"
+          type="number"
+          min="1"
+          max="3"
+          name="prority"
+          onChange={(e) =>
+            setTaskFormData({ ...task, priority: e.target.value })
+          }
+          value={task.priority}
+        />
+        <label>Project</label>
+        <input
+          placeholder="project"
+          type="text"
+          name="project"
+          onChange={(e) =>
+            setTaskFormData({ ...task, project: e.target.value })
+          }
+          value={task.project}
+        />
+        <Button type="submit" variant="success">
+          Submit
+        </Button>
+      </form>
+    </div>
+  );
+}
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -161,69 +282,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected, selected } = props;
-
-  const editTask = () => {
-    console.log("ready to edit: " + selected);
-  };
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Tasks
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Tooltip title="Edit">
-          <IconButton onClick={() => editTask()}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-}
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  selected: PropTypes.array.isRequired,
-};
-
 function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
   const [rows, setRows] = useState(tasks);
   const [order, setOrder] = useState("asc");
@@ -232,6 +290,14 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageProp);
+  const [show, setShow] = useState({ task: false });
+  const handleShowEditTask = () => setShow({ task: true });
+  const handleClose = () => setShow({ task: false });
+
+  const editTask = () => {
+    console.log("ready to edit: " + selected);
+    // handleShowEditTask();
+  };
 
   useEffect(() => {
     setRows(tasks);
@@ -303,111 +369,168 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar
-          numSelected={selected.length}
-          selected={selected}
-        />
-        <TableContainer>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={dense ? "small" : "medium"}
+    <>
+      <div id="modals">
+        <Modal show={show.task} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Task</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <EditTaskForm />
+          </Modal.Body>
+        </Modal>
+      </div>
+      <Box sx={{ width: "100%" }}>
+        <Paper sx={{ width: "100%", mb: 2 }}>
+          <Toolbar
+            sx={{
+              pl: { sm: 2 },
+              pr: { xs: 1, sm: 1 },
+              ...(selected.length > 0 && {
+                bgcolor: (theme) =>
+                  alpha(
+                    theme.palette.primary.main,
+                    theme.palette.action.activatedOpacity
+                  ),
+              }),
+            }}
           >
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row._id);
-                const labelId = `enhanced-table-checkbox-${row._id}`;
+            {selected.length > 0 ? (
+              <Typography
+                sx={{ flex: "1 1 100%" }}
+                color="inherit"
+                variant="subtitle1"
+                component="div"
+              >
+                {selected.length} selected
+              </Typography>
+            ) : (
+              <Typography
+                sx={{ flex: "1 1 100%" }}
+                variant="h6"
+                id="tableTitle"
+                component="div"
+              >
+                Tasks
+              </Typography>
+            )}
 
-                return (
+            {selected.length > 0 ? (
+              <Tooltip title="Edit">
+                <IconButton onClick={() => editTask()}>
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Tooltip title="Filter list">
+                <IconButton>
+                  <FilterListIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+          </Toolbar>
+          <TableContainer>
+            <Table
+              sx={{ minWidth: 750 }}
+              aria-labelledby="tableTitle"
+              size={dense ? "small" : "medium"}
+            >
+              <EnhancedTableHead
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {visibleRows.map((row, index) => {
+                  const isItemSelected = isSelected(row._id);
+                  const labelId = `enhanced-table-checkbox-${row._id}`;
+
+                  return (
+                    <TableRow
+                      hover
+                      onClick={(event) => handleClick(event, row._id)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row._id}
+                      selected={isItemSelected}
+                      sx={{ cursor: "pointer" }}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox
+                          key={index}
+                          color="primary"
+                          checked={isItemSelected}
+                          inputProps={{
+                            "aria-labelledby": labelId,
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                        style={{ width: "200px" }}
+                      >
+                        {row.title}
+                      </TableCell>
+                      <TableCell
+                        className={
+                          isBackgroundColorEnabled
+                            ? "priority-" + row.priority
+                            : ""
+                        }
+                        align="right"
+                        style={{ width: "10px" }}
+                      >
+                        {row.priority}
+                      </TableCell>
+                      <TableCell align="right">{row.status}</TableCell>
+                      <TableCell align="right">
+                        {new Date(parseInt(row.dueDate)).toLocaleDateString()}
+                      </TableCell>
+                      <TableCell align="right">{row.description}</TableCell>
+                      <TableCell align="right">{row.project}</TableCell>
+                      <TableCell align="right">
+                        {new Date(
+                          parseInt(row.createdDate)
+                        ).toLocaleDateString()}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+                {emptyRows > 0 && (
                   <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row._id)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row._id}
-                    selected={isItemSelected}
-                    sx={{ cursor: "pointer" }}
+                    style={{
+                      height: (dense ? 33 : 53) * emptyRows,
+                    }}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        key={index}
-                        color="primary"
-                        checked={isItemSelected}
-                        inputProps={{
-                          "aria-labelledby": labelId,
-                        }}
-                      />
-                    </TableCell>
-                    <TableCell
-                      component="th"
-                      id={labelId}
-                      scope="row"
-                      padding="none"
-                      style={{ width: "200px" }}
-                    >
-                      {row.title}
-                    </TableCell>
-                    <TableCell
-                      className={
-                        isBackgroundColorEnabled
-                          ? "priority-" + row.priority
-                          : ""
-                      }
-                      align="right"
-                      style={{ width: "10px" }}
-                    >
-                      {row.priority}
-                    </TableCell>
-                    <TableCell align="right">{row.status}</TableCell>
-                    <TableCell align="right">
-                      {new Date(parseInt(row.dueDate)).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell align="right">{row.description}</TableCell>
-                    <TableCell align="right">{row.project}</TableCell>
-                    <TableCell align="right">
-                      {new Date(parseInt(row.createdDate)).toLocaleDateString()}
-                    </TableCell>
+                    <TableCell colSpan={6} />
                   </TableRow>
-                );
-              })}
-              {emptyRows > 0 && (
-                <TableRow
-                  style={{
-                    height: (dense ? 33 : 53) * emptyRows,
-                  }}
-                >
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
         />
-      </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
-    </Box>
+      </Box>
+    </>
   );
 }
 
