@@ -1,5 +1,8 @@
+import { useEffect } from "react";
 import { KanbanBoard } from "../components/Kanban/index";
-import { QUERY_ME } from "../utils/queries";
+import { useTaskGuruContext } from "../utils/GlobalState";
+import { QUERY_TASKS, QUERY_ME } from "../utils/queries";
+import { UPDATE_TASKS } from "../utils/actions";
 import { useQuery } from "@apollo/client";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
@@ -8,6 +11,18 @@ function Kanban() {
   // Logged user data (me)
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
   const user = userData?.me || {};
+
+  const [state, dispatch] = useTaskGuruContext();
+  const { loading: loading, data: tasks } = useQuery(QUERY_TASKS);
+
+  useEffect(() => {
+    if (tasks) {
+      dispatch({
+        type: UPDATE_TASKS,
+        tasks: tasks.tasks,
+      });
+    }
+  }, [tasks, dispatch]);
 
   if (!user.name) {
     return (
@@ -28,7 +43,10 @@ function Kanban() {
   }
   return (
     <>
-      <Kanban></Kanban>
+      <KanbanBoard
+              loading={loading}
+              rows={state.kanban}>
+        </KanbanBoard>
     </>
   );
 }

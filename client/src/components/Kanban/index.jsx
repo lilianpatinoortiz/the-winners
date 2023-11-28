@@ -1,6 +1,6 @@
 import { useState} from "react";
 import { Navbar } from "../NavBar/index";
-import { TasksContainer } from "../Task/index";
+import { TasksList } from "../TasksList/index";
 import { Task } from "../Task/index";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Grid, Paper, Typography } from "@mui/material";
@@ -63,7 +63,7 @@ function KanbanBoard() {
                     <Droppable droppableId="todoTasks" direction="vertical">
                       {(provided) => (
                         <div ref={provided.innerRef} {...provided.droppableProps}>
-                          <TasksContainer
+                          <TasksList
                             loading={loadingTasks}
                             rows={tasks.filter((task) => task.status === "todo")}
                             rowsPerPageProp={10}
