@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Modal } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../utils/mutations";
-
-import AuthService from "../../utils/auth";
+import { useNavigate } from "react-router-dom";
+import Auth from "../../utils/auth";
+// import { Button } from '@mui/material';
 
 const SignupForm = () => {
+  // react-router-dom hook to programaticaly navigate
+  const navigate = useNavigate();
+
   // set initial form state
   const [userFormData, setUserFormData] = useState({
     name: "",
@@ -16,6 +20,7 @@ const SignupForm = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
+
   const [addUser, { error }] = useMutation(ADD_USER);
   useEffect(() => {
     if (error) {
@@ -24,6 +29,7 @@ const SignupForm = () => {
       setShowAlert(false);
     }
   }, [error]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
@@ -43,8 +49,13 @@ const SignupForm = () => {
       const { data } = await addUser({
         variables: { ...userFormData },
       });
+      console.log(data);
 
-      Auth.login(data.addUser.token);
+      if (!data.createUser) return;
+      Auth.login(data.createUser.token);
+
+      // Take the users to another page if they sucesfully sign up
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
@@ -75,7 +86,7 @@ const SignupForm = () => {
           <Form.Control
             type="text"
             placeholder="Your username"
-            name="username"
+            name="name"
             onChange={handleInputChange}
             value={userFormData.username}
             required
@@ -116,14 +127,10 @@ const SignupForm = () => {
         </Form.Group>
         <Button
           disabled={
-            !(
-              userFormData.username &&
-              userFormData.email &&
-              userFormData.password
-            )
+            !(userFormData.name && userFormData.email && userFormData.password)
           }
           type="submit"
-          variant="success"
+          variant="secondary"
         >
           Submit
         </Button>

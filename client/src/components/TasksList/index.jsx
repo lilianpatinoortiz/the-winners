@@ -21,7 +21,7 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -220,13 +220,27 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-function TasksList({ rows, rowsPerPageProp, isBackgroundColorEnabled }) {
+function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
+  const [rows, setRows] = useState(tasks);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
   const [dense, setDense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageProp);
+
+  useEffect(() => {
+    setRows(tasks);
+  }, [rows, tasks]);
+
+  const visibleRows = useMemo(
+    () =>
+      stableSort(rows, getComparator(order, orderBy)).slice(
+        page * rowsPerPage,
+        page * rowsPerPage + rowsPerPage
+      ),
+    [rows, order, orderBy, page, rowsPerPage]
+  );
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -281,15 +295,6 @@ function TasksList({ rows, rowsPerPageProp, isBackgroundColorEnabled }) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-  const visibleRows = useMemo(
-    () =>
-      stableSort(rows, getComparator(order, orderBy)).slice(
-        page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage
-      ),
-    [order, orderBy, page, rowsPerPage]
-  );
-
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -320,7 +325,7 @@ function TasksList({ rows, rowsPerPageProp, isBackgroundColorEnabled }) {
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.id}
+                    key={row._id}
                     selected={isItemSelected}
                     sx={{ cursor: "pointer" }}
                   >
@@ -354,10 +359,14 @@ function TasksList({ rows, rowsPerPageProp, isBackgroundColorEnabled }) {
                       {row.priority}
                     </TableCell>
                     <TableCell align="right">{row.status}</TableCell>
-                    <TableCell align="right">{row.dueDate}</TableCell>
+                    <TableCell align="right">
+                      {new Date(parseInt(row.dueDate)).toLocaleDateString()}
+                    </TableCell>
                     <TableCell align="right">{row.description}</TableCell>
                     <TableCell align="right">{row.project}</TableCell>
-                    <TableCell align="right">{row.createdDate}</TableCell>
+                    <TableCell align="right">
+                      {new Date(parseInt(row.createdDate)).toLocaleDateString()}
+                    </TableCell>
                   </TableRow>
                 );
               })}

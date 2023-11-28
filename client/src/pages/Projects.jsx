@@ -1,4 +1,8 @@
 import { ProjectsContainer } from "../components/Project/index";
+import { QUERY_ME } from "../utils/queries";
+import { useQuery } from "@apollo/client";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 /*
  Dummy data - to be removed
  */
@@ -9,7 +13,7 @@ const projects = [
     data: [
       { key: "Finished", value: 1 },
       { key: "In Progress", value: 2 },
-      { key: "Finished", value: 3 },
+      { key: "Open", value: 3 },
     ],
   },
   {
@@ -18,7 +22,7 @@ const projects = [
     data: [
       { key: "Finished", value: 1 },
       { key: "In Progress", value: 1 },
-      { key: "Finished", value: 1 },
+      { key: "Open", value: 1 },
     ],
   },
   {
@@ -27,7 +31,7 @@ const projects = [
     data: [
       { key: "Finished", value: 10 },
       { key: "In Progress", value: 0 },
-      { key: "Finished", value: 0 },
+      { key: "Open", value: 0 },
     ],
   },
   {
@@ -36,7 +40,7 @@ const projects = [
     data: [
       { key: "Finished", value: 13 },
       { key: "In Progress", value: 3 },
-      { key: "Finished", value: 3 },
+      { key: "Open", value: 3 },
     ],
   },
   {
@@ -45,7 +49,7 @@ const projects = [
     data: [
       { key: "Finished", value: 14 },
       { key: "In Progress", value: 2 },
-      { key: "Finished", value: 8 },
+      { key: "Open", value: 8 },
     ],
   },
   {
@@ -62,6 +66,28 @@ const projects = [
  Dummy data - to be removed
  */
 function Projects() {
+  // Logged user data (me)
+  const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
+  const user = userData?.me || {};
+
+  if (!user.name) {
+    return (
+      <>
+        {!userLoading ? (
+          <>
+            <h5>
+              You need to be logged in to see this. Use the access links to sign
+              up or log in!
+            </h5>
+            <Stack spacing={1}>
+              <Skeleton variant="rectangular" width={1000} height={600} />
+            </Stack>
+          </>
+        ) : null}
+      </>
+    );
+  }
+
   return (
     <>
       <ProjectsContainer projects={projects}></ProjectsContainer>

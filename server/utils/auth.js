@@ -43,7 +43,7 @@ module.exports = {
       console.log("Invalid token");
     }
 
-    // Return the request object
+    // return the request object so it can be passed to the resolver as `context`
     return req;
   },
   // * Function to sign the token - it gets an email and a username (_id is placeholder)
