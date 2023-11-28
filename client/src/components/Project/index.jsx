@@ -1,14 +1,10 @@
-import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Item from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { ChartBar } from "../Chart/index";
 import { useState, useEffect } from "react";
-
-const createProject = () => {
-  console.log("create project");
-};
+import ProjectForm from "../ProjectForm";
 
 function ProjectsContainer({ loading, projects, tasks }) {
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -62,7 +58,7 @@ function ProjectsContainer({ loading, projects, tasks }) {
               <Button
                 component="label"
                 variant="contained"
-                onClick={createProject}
+                onClick={handleCreateProject}
                 startIcon={<AddCircleIcon />}
               >
                 Create project

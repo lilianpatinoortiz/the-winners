@@ -31,9 +31,17 @@ export const CREATE_PROJECT_MUTATION = gql`
     $title: String!
     $description: String!
     $userid: String!
+    $createdDate: String!
+    $dueDate: String!
   ) {
-    createProject(title: $title, description: $description, userid: $userid) {
-      id
+    createProject(
+      title: $title
+      description: $description
+      userid: $userid
+      createdDate: $createdDate
+      dueDate: $dueDate
+    ) {
+      _id
       title
       description
       userid
