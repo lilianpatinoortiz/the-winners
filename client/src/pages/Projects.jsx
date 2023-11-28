@@ -1,75 +1,54 @@
+import { useEffect } from "react";
 import { ProjectsContainer } from "../components/Project/index";
-import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-/*
- Dummy data - to be removed
- */
-const projects = [
-  {
-    title: "Project 1",
-    description: "Description 1",
-    data: [
-      { key: "Finished", value: 1 },
-      { key: "In Progress", value: 2 },
-      { key: "Open", value: 3 },
-    ],
-  },
-  {
-    title: "Project 2",
-    description: "Description 2",
-    data: [
-      { key: "Finished", value: 1 },
-      { key: "In Progress", value: 1 },
-      { key: "Open", value: 1 },
-    ],
-  },
-  {
-    title: "Project 3",
-    description: "Description 3",
-    data: [
-      { key: "Finished", value: 10 },
-      { key: "In Progress", value: 0 },
-      { key: "Open", value: 0 },
-    ],
-  },
-  {
-    title: "Project 4",
-    description: "Description 4",
-    data: [
-      { key: "Finished", value: 13 },
-      { key: "In Progress", value: 3 },
-      { key: "Open", value: 3 },
-    ],
-  },
-  {
-    title: "Project 5",
-    description: "Description 5",
-    data: [
-      { key: "Finished", value: 14 },
-      { key: "In Progress", value: 2 },
-      { key: "Open", value: 8 },
-    ],
-  },
-  {
-    title: "Project 6",
-    description: "Description 6",
-    data: [
-      { key: "Finished", value: 2 },
-      { key: "In Progress", value: 4 },
-      { key: "Finished", value: 1 },
-    ],
-  },
-];
-/*
- Dummy data - to be removed
- */
+import { QUERY_PROJECTS, QUERY_TASKS, QUERY_ME } from "../utils/queries";
+import { UPDATE_PROJECTS, UPDATE_TASKS } from "../utils/actions";
+import { useTaskGuruContext } from "../utils/GlobalState";
+
 function Projects() {
   // Logged user data (me)
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
   const user = userData?.me || {};
 
+  // state for the app
+  const [state, dispatch] = useTaskGuruContext();
+  // Projects data
+  const { loading, data: projects } = useQuery(QUERY_PROJECTS);
+  // Tasks data
+  const { loading: loadingTasks, data: tasks } = useQuery(QUERY_TASKS);
+
+  // Handle projects changes
+  useEffect(() => {
+    if (projects) {
+      dispatch({
+        type: UPDATE_PROJECTS,
+        projects: projects.projects,
+      });
+    }
+  }, [projects, dispatch]);
+
+  // Handle tasks changes
+  useEffect(() => {
+    if (tasks) {
+      dispatch({
+        type: UPDATE_TASKS,
+        tasks: tasks.tasks,
+      });
+    }
+  }, [tasks, dispatch]);
+
+  // Get my projects
+  const filterMyProjects = () => {
+    return state.projects.filter((project) => project.userid === user._id);
+  };
+  // Get my tasks
+  const filterMyTasks = () => {
+    return state.tasks.filter((task) => task.userid === user._id);
+  };
+
+  // If the user is not logged in
   if (!user.name) {
     return (
       <>
@@ -87,10 +66,14 @@ function Projects() {
       </>
     );
   }
-
+  // If the user is  logged in
   return (
     <>
-      <ProjectsContainer projects={projects}></ProjectsContainer>
+      <ProjectsContainer
+        loading={loading}
+        projects={filterMyProjects()}
+        tasks={filterMyTasks()}
+      ></ProjectsContainer>
     </>
   );
 }

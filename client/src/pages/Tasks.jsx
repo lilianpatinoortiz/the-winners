@@ -14,8 +14,10 @@ function Tasks() {
 
   // state for the app
   const [state, dispatch] = useTaskGuruContext();
+  // Tasks data
   const { loading, data } = useQuery(QUERY_TASKS);
 
+  // Handle tasks changes
   useEffect(() => {
     if (data) {
       dispatch({
@@ -25,6 +27,12 @@ function Tasks() {
     }
   }, [data, dispatch]);
 
+  // Get my tasks
+  const filterMyTasks = () => {
+    return state.tasks.filter((task) => task.userid === user._id);
+  };
+
+  // If the user is not logged in
   if (!user.name) {
     return (
       <>
@@ -42,11 +50,12 @@ function Tasks() {
       </>
     );
   }
+  // If the user is  logged in
   return (
     <>
       <TasksContainer
         loading={loading}
-        rows={state.tasks}
+        rows={filterMyTasks()}
         rowsPerPageProp={10}
       ></TasksContainer>
     </>

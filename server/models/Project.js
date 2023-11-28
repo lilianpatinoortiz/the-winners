@@ -19,6 +19,10 @@ const projectSchema = new Schema({
     default: Date.now,
     required: true,
   },
+  userid: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
   tasks: [Task.schema],
 });
 

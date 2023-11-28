@@ -3,11 +3,6 @@ const typeDefs = `
     token: ID
     user: User
   }
-  type Reminder {
-    _id: ID
-    description: String
-    dueDate: String
-  }
 
   type Task {
     _id: ID
@@ -17,17 +12,20 @@ const typeDefs = `
     dueDate: String
     priority: Int
     status: String
+    userid: String # User
     project: String
-    reminders: [Reminder]
   }
 
   type Project {
     _id: ID
+    title: String
     description: String
     createdDate: String
     dueDate: String 
+    userid: String # User
     tasks: [Task]
   }
+
   type User {
     _id: ID
     name: String
@@ -40,13 +38,16 @@ const typeDefs = `
 
   type Query {
     user(email: String!): User,
-    project: Project,
+    project(id: ID!): Project,
+    projects:[Project],
     task: Task,
     tasks:[Task],
-    reminder: Reminder,
+    myProjects (userid: String!): [Project],
+    myTasks (userid: String!): [Task],
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
     me: User
   }
+
   type Mutation{
     createUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
