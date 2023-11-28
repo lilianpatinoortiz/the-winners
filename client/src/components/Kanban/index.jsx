@@ -1,6 +1,7 @@
 import { useState} from "react";
 import { Navbar } from "../NavBar/index";
 import { TasksContainer } from "../Task/index";
+import { Task } from "../Task/index";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Grid, Paper, Typography } from "@mui/material";
 
@@ -12,7 +13,7 @@ function KanbanBoard() {
 
   const fetchTasks = async () => {
     try {
-        const response = await fetch(tasksApiUrl);
+        const response = await fetch(tasks);
         if (!response.ok) {
           throw new Error(`Failed to fetch tasks. Status: ${response.status}`);
         }
