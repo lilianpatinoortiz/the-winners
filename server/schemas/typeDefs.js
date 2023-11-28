@@ -21,6 +21,17 @@ const typeDefs = `
     reminders: [Reminder]
   }
 
+  input TaskInput {
+    title: String!
+    description: String
+    createdDate: String
+    dueDate: String
+    priority: Int
+    status: String
+    project: String
+    reminders: [ReminderInput]
+  }
+
   type Project {
     _id: ID
     title: String
@@ -52,7 +63,7 @@ const typeDefs = `
   type Mutation{
     createUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-  
+    createProject(title: String!, description: String!, dueDate: String!, tasks: [TaskInput]): Project
   }
   
   `;

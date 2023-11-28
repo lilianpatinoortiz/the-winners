@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { KanbanBoard } from "../components/Kanban/index";
 import { useTaskGuruContext } from "../utils/GlobalState";
 import { QUERY_TASKS, QUERY_ME } from "../utils/queries";
@@ -13,7 +13,7 @@ function Kanban() {
   const user = userData?.me || {};
 
   const [state, dispatch] = useTaskGuruContext();
-  const { loading: loading, data: tasks } = useQuery(QUERY_TASKS);
+  const { loading: taskloading, data: tasks } = useQuery(QUERY_TASKS);
 
   useEffect(() => {
     if (tasks) {
@@ -44,7 +44,7 @@ function Kanban() {
   return (
     <>
       <KanbanBoard
-              loading={loading}
+              loading={taskloading}
               rows={state.kanban}>
         </KanbanBoard>
     </>
