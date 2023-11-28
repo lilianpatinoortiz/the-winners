@@ -26,17 +26,6 @@ function KanbanBoard() {
     };
 
   React.useEffect(() => {
-    // Fetch projects data when the component mounts
-    fetchProjects()
-      .then((data) => {
-        setProjects(data); // Assuming data is an array of projects
-        setLoadingProjects(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching projects:", error);
-        setLoadingProjects(false);
-      });
-
     // Fetch tasks data when the component mounts
     fetchTasks()
       .then((data) => {
