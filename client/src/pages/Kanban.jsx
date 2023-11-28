@@ -31,7 +31,7 @@ function Kanban() {
       <Grid container spacing={2}>
         <Grid item lg={9} md={9} xs={12} key={2}>
           <div>
-            <h1>Comming soon! </h1>
+            <h1>Coming soon! </h1>
           </div>
         </Grid>
         <Grid item lg={9} md={9} xs={12} key={2}>
