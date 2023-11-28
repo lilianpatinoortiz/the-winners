@@ -18,7 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { useState, useMemo, useEffect } from "react";
@@ -121,7 +121,6 @@ function EnhancedTableHead(props) {
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
             inputProps={{
               "aria-label": "select all tasks",
             }}
@@ -163,7 +162,11 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected, selected } = props;
+
+  const editTask = () => {
+    console.log("ready to edit: " + selected);
+  };
 
   return (
     <Toolbar
@@ -200,9 +203,9 @@ function EnhancedTableToolbar(props) {
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
+        <Tooltip title="Edit">
+          <IconButton onClick={() => editTask()}>
+            <EditIcon />
           </IconButton>
         </Tooltip>
       ) : (
@@ -218,6 +221,7 @@ function EnhancedTableToolbar(props) {
 
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  selected: PropTypes.array.isRequired,
 };
 
 function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
@@ -259,20 +263,23 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
 
   const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
+    let newSelected = [id];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
+    // code commented to prevent multiple select!
+
+    //let newSelected = selected.indexOf(id);
+    // if (selectedIndex === -1) {
+    //   newSelected = newSelected.concat(selected, id);
+    // } else if (selectedIndex === 0) {
+    //   newSelected = newSelected.concat(selected.slice(1));
+    // } else if (selectedIndex === selected.length - 1) {
+    //   newSelected = newSelected.concat(selected.slice(0, -1));
+    // } else if (selectedIndex > 0) {
+    //   newSelected = newSelected.concat(
+    //     selected.slice(0, selectedIndex),
+    //     selected.slice(selectedIndex + 1)
+    //   );
+    // }
     setSelected(newSelected);
   };
 
@@ -298,7 +305,10 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          selected={selected}
+        />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -315,13 +325,13 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.id);
-                const labelId = `enhanced-table-checkbox-${index}`;
+                const isItemSelected = isSelected(row._id);
+                const labelId = `enhanced-table-checkbox-${row._id}`;
 
                 return (
                   <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={(event) => handleClick(event, row._id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -331,6 +341,7 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
+                        key={index}
                         color="primary"
                         checked={isItemSelected}
                         inputProps={{

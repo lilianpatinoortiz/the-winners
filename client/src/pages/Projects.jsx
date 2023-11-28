@@ -39,6 +39,15 @@ function Projects() {
     }
   }, [tasks, dispatch]);
 
+  // Get my projects
+  const filterMyProjects = () => {
+    return state.projects.filter((project) => project.userid === user._id);
+  };
+  // Get my tasks
+  const filterMyTasks = () => {
+    return state.tasks.filter((task) => task.userid === user._id);
+  };
+
   // If the user is not logged in
   if (!user.name) {
     return (
@@ -62,8 +71,8 @@ function Projects() {
     <>
       <ProjectsContainer
         loading={loading}
-        projects={state.projects}
-        tasks={state.tasks}
+        projects={filterMyProjects()}
+        tasks={filterMyTasks()}
       ></ProjectsContainer>
     </>
   );

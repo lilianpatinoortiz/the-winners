@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { useTaskGuruContext } from "../utils/GlobalState";
-import { QUERY_TASKS, QUERY_ME } from "../utils/queries";
+import { QUERY_TASKS, QUERY_MY_TASKS, QUERY_ME } from "../utils/queries";
 import { UPDATE_TASKS } from "../utils/actions";
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
@@ -10,11 +10,14 @@ import { Dashboard } from "../components/Dashboard";
 function Home() {
   const [state, dispatch] = useTaskGuruContext();
   const [open, setOpen] = useState(false);
-  // Tasks data
-  const { loading, data } = useQuery(QUERY_TASKS);
+
   // Logged user data (me)
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
   const user = userData?.me || {};
+
+  // Tasks data
+  const { loading, data } = useQuery(QUERY_TASKS);
+
   // chart data
   let chartData = [];
 
@@ -28,6 +31,16 @@ function Home() {
     }
   }, [data, dispatch]);
 
+  // Get my tasks
+  const filterMyTasks = () => {
+    return state.tasks.filter((task) => task.userid === user._id);
+  };
+
+  // Get the completed tasks for the metrics
+  const filterCompletedTasks = () => {
+    return filterMyTasks().filter((task) => task.status === "Finished");
+  };
+
   // Create chart data function
   const createChartData = () => {
     chartData = [
@@ -35,17 +48,12 @@ function Home() {
       { key: "In Progress", value: 0 },
       { key: "Open", value: 0 },
     ];
-    state.tasks.map((task) => {
+    filterMyTasks().map((task) => {
       chartData.find((item) => item.key == task.status).value += 1;
     });
   };
 
   createChartData();
-
-  // Get the completed tasks for the metrics
-  const filterCompletedTasks = () => {
-    return state.tasks.filter((task) => task.status === "Finished");
-  };
 
   // Handle click for the alert
   const handleClick = () => {
@@ -103,7 +111,7 @@ function Home() {
         handleClose={handleClose}
         chartData={chartData}
         filterCompletedTasks={filterCompletedTasks}
-        tasks={state.tasks}
+        tasks={filterMyTasks()}
       ></Dashboard>
     </>
   );

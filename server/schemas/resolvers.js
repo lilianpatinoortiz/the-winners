@@ -1,6 +1,6 @@
 // Import models
 const { GraphQLError } = require("graphql");
-const { User, Project, Task, Reminder } = require("../models");
+const { User, Project, Task } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 // Declare resolvers, to be able to respond to a query
@@ -11,8 +11,8 @@ const resolvers = {
     user: async (parent, { email }) => {
       return await User.findOne({ email });
     },
-    project: async (parent, { id, title }) => {
-      return await Project.findOne({ id });
+    project: async (parent, { id }) => {
+      return await Project.findOne({ _id: id });
     },
     projects: async (parent) => {
       return await Project.find();
@@ -23,8 +23,15 @@ const resolvers = {
     tasks: async (parent) => {
       return await Task.find().populate("project");
     },
-    reminder: async (parent, { id }) => {
-      return await Reminder.findOne({ id });
+    myTasks: async (parent, { userid }) => {
+      const params = {};
+      if (userid) {
+        params.userid = userid;
+      }
+      return await Task.find(params);
+    },
+    myProjects: async (parent, { userid }) => {
+      return await Project.find({ userid: userid });
     },
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
     me: async (parent, args, context) => {
@@ -56,6 +63,10 @@ const resolvers = {
       }
       const token = signToken(user);
       return { token, user };
+    },
+    createProject: async (_, args) => {
+      const project = await Project.create(args);
+      return project;
     },
   },
 };
