@@ -41,18 +41,20 @@ const typeDefs = `
 
   type Query {
     user(email: String!): User,
-    project: Project,
+    project(id: ID!): Project,
     projects:[Project],
     task: Task,
     tasks:[Task],
-    reminder: Reminder,
-    # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
+    myProjects (userid: String!): [Project],
+    myTasks (userid: String!): [Task],
+    # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user’s data
     me: User
   }
+  
   type Mutation{
     createUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    createTask(task: String!, title: String!, description: String!, createdDate: String!, dueDate: String!, priority: Int, status: String!, project: String!):
+    createTask(task: String!, title: String!, description: String!, createdDate: String!, dueDate: String!, priority: Int, status: String!, project: String!): Task
     createProject(title: String!, description: String!, createdDate: String!, userid: String! ,dueDate: String!): Project
 
   }
