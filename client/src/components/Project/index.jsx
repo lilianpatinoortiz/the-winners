@@ -10,7 +10,7 @@ function ProjectsContainer({ loading, projects, tasks }) {
   const [showCreateForm, setShowCreateForm] = useState(false);
 
   const handleCreateProject = () => {
-    setShowCreateForm(true);
+    setShowCreateForm(!showCreateForm);
   };
 
   const [rows, setRows] = useState(projects);
@@ -65,7 +65,7 @@ function ProjectsContainer({ loading, projects, tasks }) {
               </Button>
             </Grid>
           </Grid>
-          {showCreateForm && <ProjectForm />}
+          {showCreateForm && <ProjectForm show={showCreateForm} handleCreateProject={handleCreateProject}/>}
           {rows.length ? (
             <Grid container spacing={2} id="projects">
               {rows.map((project) => (

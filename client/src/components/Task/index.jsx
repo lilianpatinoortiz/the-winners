@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+ import { Button as MuiButton} from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { TasksList } from "../TasksList";
-import { Modal } from "react-bootstrap";
+import { rootShouldForwardProp } from "@mui/material/styles/styled";
+import { Form, Modal, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { ADD_TASK } from "../../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
@@ -15,6 +17,7 @@ function TaskForm() {
   // Logged user data (me)
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
   const user = userData?.me || {};
+
   const [taskFormData, setTaskFormData] = useState({
     title: "",
     description: "",
@@ -31,7 +34,7 @@ function TaskForm() {
     const { name, value } = event.target;
     setTaskFormData({ ...taskFormData, [name]: value });
   };
-
+  
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -60,69 +63,81 @@ function TaskForm() {
       project: "",
       userid: user._id,
     });
+    navigate("/"); // Redirect user to home page
+
   };
 
   return (
     <div>
-      <form
+      <Form
         className="flex-row justify-center justify-space-between-md align-center"
         onSubmit={handleFormSubmit}
       >
-        <label>Title</label>
-        <input
-          placeholder="title"
-          type="text"
-          name="title"
-          value={taskFormData.title}
-          onChange={(e) =>
-            setTaskFormData({ ...taskFormData, title: e.target.value })
-          }
-        />
-        <label>Description</label>
-        <input
-          placeholder="description"
-          type="text"
-          name="description"
-          onChange={(e) =>
-            setTaskFormData({ ...taskFormData, description: e.target.value })
-          }
-          value={taskFormData.description}
-        />
-        <label>Due Date</label>
-        <input
-          placeholder="due date"
-          type="date"
-          onChange={(e) =>
-            setTaskFormData({ ...taskFormData, dueDate: e.target.value })
-          }
-          value={taskFormData.dueDate}
-        />
-        <label>Prority</label>
-        <input
-          placeholder="prority"
-          type="number"
-          min="1"
-          max="3"
-          name="prority"
-          onChange={(e) =>
-            setTaskFormData({ ...taskFormData, priority: e.target.value })
-          }
-          value={taskFormData.priority}
-        />
-        <label>Project</label>
-        <input
-          placeholder="project"
-          type="text"
-          name="project"
-          onChange={(e) =>
-            setTaskFormData({ ...taskFormData, project: e.target.value })
-          }
-          value={taskFormData.project}
-        />
-        <Button type="submit" variant="success">
+        <Form.Group className="mb-3" controlId="title">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            placeholder="title"
+            type="text"
+            name="title"
+            value={taskFormData.title}
+            onChange={(e) =>
+              setTaskFormData({ ...taskFormData, title: e.target.value })
+            }
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="description">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            placeholder="description"
+            type="text"
+            name="description"
+            onChange={(e) =>
+              setTaskFormData({ ...taskFormData, description: e.target.value })
+            }
+            value={taskFormData.description}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="dueDate">
+          <Form.Label>Due Date</Form.Label>
+          <Form.Control
+            placeholder="due date"
+            type="date"
+            onChange={(e) =>
+              setTaskFormData({ ...taskFormData, dueDate: e.target.value })
+            }
+            value={taskFormData.dueDate}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="priority">
+          <Form.Label>Prority</Form.Label>
+          <Form.Range
+            placeholder="prority"
+            type="number"
+            min="1"
+            max="3"
+            name="prority"
+            onChange={(e) =>
+              setTaskFormData({ ...taskFormData, priority: e.target.value })
+            }
+            value={taskFormData.priority}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="project">
+          <Form.Label>Project</Form.Label>
+          <Form.Control
+            placeholder="project"
+            type="text"
+            name="project"
+            onChange={(e) =>
+              setTaskFormData({ ...taskFormData, project: e.target.value })
+            }
+            value={taskFormData.project}
+          />
+        </Form.Group>
+        <Button type="submit" variant="secondary">
           Submit
         </Button>
-      </form>
+      </Form>
     </div>
   );
 }
@@ -151,15 +166,15 @@ function TasksContainer({ loading, rows, rowsPerPageProp }) {
           <Grid container spacing={2}>
             <Grid item xs={4} md={10}></Grid>
             <Grid item xs={8} md={2}>
-              <Button
-                component="label"
+              <MuiButton
+                // component="label"
                 variant="contained"
                 startIcon={<AddCircleIcon />}
                 onClick={handleShowCreateTask}
                 id="login"
               >
                 Create task
-              </Button>
+              </MuiButton>
             </Grid>
           </Grid>
           {rows.length ? (

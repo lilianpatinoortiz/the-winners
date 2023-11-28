@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { CREATE_PROJECT_MUTATION } from "../../utils/mutations";
 import { QUERY_ME } from "../../utils/queries";
 
-const ProjectForm = () => {
+const ProjectForm = ({ show, handleCreateProject}) => {
   const navigate = useNavigate();
   // Logged user data (me)
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
   const user = userData?.me || {};
 
+ 
   const [project, setProject] = useState({
     title: "",
     description: "",
@@ -56,31 +57,50 @@ const ProjectForm = () => {
 
   return (
     <div>
-      <h1>Create Project</h1>
-      <form onSubmit={handleFormSubmit}>
-        <label>Title:</label>
-        <input
+       <Modal
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={show}
+      onHide={handleCreateProject}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Create Project
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <Form onSubmit={handleFormSubmit}>
+        <Form.Group className="mb-3" controlId="title">
+        <Form.Label>Title:</Form.Label>
+        <Form.Control
           type="text"
           value={project.title}
           onChange={(e) => setProject({ ...project, title: e.target.value })}
         />
+        </Form.Group>
         <br />
-        <label>Description:</label>
-        <textarea
+        <Form.Group className="mb-3" controlId="description">
+        <Form.Label>Description:</Form.Label>
+        <Form.Control
+          as={"textarea"}
           value={project.description}
           onChange={(e) =>
             setProject({ ...project, description: e.target.value })
           }
         />
+        </Form.Group>
         <br />
-        <label>Due Date:</label>
-        <input
+        <Form.Group className="mb-3" controlId="dueDate">
+        <Form.Label>Due Date:</Form.Label>
+        <Form.Control
           type="date"
           value={project.dueDate}
           onChange={(e) => setProject({ ...project, dueDate: e.target.value })}
         />
+        </Form.Group>
         <br />
-        <button type="submit">Create Project</button>
+        <Button variant="secondary" type="submit">Create Project</Button>
         <Alert
           dismissible
           onClose={() => setShowAlert(false)}
@@ -89,7 +109,13 @@ const ProjectForm = () => {
         >
           Something went wrong creating the project!
         </Alert>
-      </form>
+      </Form>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={handleCreateProject}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+      
     </div>
   );
 };
