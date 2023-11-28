@@ -204,7 +204,7 @@ function EnhancedTableToolbar(props) {
 
       {numSelected > 0 ? (
         <Tooltip title="Edit">
-          <IconButton onClick={editTask()}>
+          <IconButton onClick={() => editTask()}>
             <EditIcon />
           </IconButton>
         </Tooltip>
