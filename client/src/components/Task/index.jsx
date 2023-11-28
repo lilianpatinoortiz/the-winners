@@ -7,13 +7,20 @@ import { rootShouldForwardProp } from "@mui/material/styles/styled";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ADD_TASK } from "../../utils/mutations";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { QUERY_ME } from "../../utils/queries";
+import { useNavigate } from "react-router-dom";
+
 
 
 
 function TaskForm() {
-  const [taskFormData, setTaskFormData] = useState({ title: "", description: "", createdDate: "", dueDate: "", priority: 1, status: "", project: ""});
-  const [task, setTask] = useState("");
+  const navigate = useNavigate();
+
+  // Logged user data (me)
+  const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
+  const user = userData?.me || {};
+  const [taskFormData, setTaskFormData] = useState({ title: "", description: "", createdDate: new Date(), dueDate: new Date(), priority: 1, status: "Open", project: "", userid: user._id});
   const [addTask, { error }] = useMutation(ADD_TASK);
 
   const handleInputChange = (event) => {
@@ -36,7 +43,8 @@ function TaskForm() {
       const { data } = await addTask({
         variables: { ...taskFormData },
       });
-      console.log(data);
+      console.log("Task created", data.addTask);
+      navigate("/tasks");
     } catch (err) {
       console.error(err);
     }
@@ -44,13 +52,16 @@ function TaskForm() {
     setTaskFormData({
       title: "",
        description: "", 
-       createdDate: "", 
-       dueDate: "", 
+       createdDate: new Date(),
+    dueDate: new Date(),
        priority: 1,
-         status: "", 
-        project: ""
+         status: "Open", 
+        project: "",
+        userid: user._id
+
     });
     navigate("/"); // Redirect user to home page
+
   };
 
 
@@ -65,23 +76,22 @@ function TaskForm() {
           placeholder="title"
           type="text"
           name="title"
-          onChange={handleInputChange}
           value={taskFormData.title}
+          onChange={(e) => setTaskFormData({ ...taskFormData, title: e.target.value })}
         />
         <label>Description</label>
         <input 
           placeholder="description"
           type="text"
           name="description"
-          onChange={handleInputChange}
+          onChange={(e) => setTaskFormData({ ...taskFormData, description: e.target.value })}
           value={taskFormData.description}
         />
         <label>Due Date</label>
         <input 
           placeholder="due date"
           type="date"
-          name="due date"
-          onChange={handleInputChange}
+          onChange={(e) => setTaskFormData({ ...taskFormData, dueDate: e.target.value })}
           value={taskFormData.dueDate}
         />
         <label>Prority</label>
@@ -91,7 +101,7 @@ function TaskForm() {
           min="1"
           max="3"
           name="prority"
-          onChange={handleInputChange}
+          onChange={(e) => setTaskFormData({ ...taskFormData, priority: e.target.value })}
           value={taskFormData.priority}
         />
         <label>Project</label>
@@ -99,7 +109,7 @@ function TaskForm() {
           placeholder="project"
           type="text"
           name="project"
-          onChange={handleInputChange}
+          onChange={(e) => setTaskFormData({ ...taskFormData, project: e.target.value })}
           value={taskFormData.project}
         />
         <Button

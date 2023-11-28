@@ -27,8 +27,8 @@ export const LOGIN = gql`
   }
 `;
 export const ADD_TASK = gql`
-  mutation addTask($title: String!, $description: String!, $createdDate: String!, $dueDate: String!, $priority: Int, $status: String!, $project: String!){
-    addTask(title: $title, description: $description, createdDate: $createdDate, dueDate: $dueDate, priority: $priority, status: $status, project: $project) {
+  mutation addTask($title: String!, $description: String!, $createdDate: String!, $dueDate: String!, $priority: Int, $status: String!, $project: String!, $userid: String!){
+    addTask(title: $title, description: $description, createdDate: $createdDate, dueDate: $dueDate, priority: $priority, status: $status, project: $project, userid: $userid) {
       _id
       title
       description
@@ -37,6 +37,7 @@ export const ADD_TASK = gql`
       priority
       status
       project
+      userid
       }
     }
 `;
