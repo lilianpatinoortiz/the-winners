@@ -52,6 +52,7 @@ const typeDefs = `
   type Mutation{
     createUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    createTask(task: String!, title: String!, description: String!, createdDate: String!, dueDate: String!, priority: Int, status: String!, project: String!): Task
   
   }
   
