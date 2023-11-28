@@ -1,3 +1,4 @@
+import { KanbanBoard } from "../components/Kanban/index";
 import { QUERY_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import Skeleton from "@mui/material/Skeleton";
@@ -27,7 +28,7 @@ function Kanban() {
   }
   return (
     <>
-      <h1>Kanban</h1>
+      <Kanban></Kanban>
     </>
   );
 }
