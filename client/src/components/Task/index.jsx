@@ -17,6 +17,7 @@ function TaskForm() {
   // Logged user data (me)
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
   const user = userData?.me || {};
+
   const [taskFormData, setTaskFormData] = useState({
     title: "",
     description: "",
@@ -33,16 +34,13 @@ function TaskForm() {
     const { name, value } = event.target;
     setTaskFormData({ ...taskFormData, [name]: value });
   };
-
+  
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
-    // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-      //Might want to stop the function here if it is not a valid form config
     }
 
     try {
@@ -50,7 +48,7 @@ function TaskForm() {
         variables: { ...taskFormData },
       });
       console.log("Task created", data.addTask);
-      navigate("/tasks");
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
@@ -66,6 +64,7 @@ function TaskForm() {
       userid: user._id,
     });
     navigate("/"); // Redirect user to home page
+
   };
 
   return (
