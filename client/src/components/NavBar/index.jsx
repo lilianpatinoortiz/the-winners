@@ -37,14 +37,6 @@ function Navbar() {
       </ListItemAvatar>
       <ListItemText primary="Home" />
     </Button>,
-    <Button key={3} href="/kanban">
-      <ListItemAvatar>
-        <Avatar>
-          <CalendarMonthIcon />
-        </Avatar>
-      </ListItemAvatar>
-      <ListItemText primary="Kanban" />
-    </Button>,
     <Button key={4} href="/projects">
       <ListItemAvatar>
         <Avatar>
@@ -60,6 +52,14 @@ function Navbar() {
         </Avatar>
       </ListItemAvatar>
       <ListItemText primary="Tasks" />
+    </Button>,
+    <Button key={3} href="/kanban">
+      <ListItemAvatar>
+        <Avatar>
+          <CalendarMonthIcon />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText primary="Kanban" />
     </Button>,
   ];
   return (
