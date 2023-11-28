@@ -33,8 +33,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <ApolloProvider client={client}>
       <TaskGuruProvider>
