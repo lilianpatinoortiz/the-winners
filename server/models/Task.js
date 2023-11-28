@@ -35,6 +35,10 @@ const taskSchema = new Schema({
     type: String,
     required: true,
   },
+  userid: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Task = model("Task", taskSchema);

@@ -12,6 +12,7 @@ const typeDefs = `
     dueDate: String
     priority: Int
     status: String
+    userid: User
     project: String
   }
 
@@ -21,6 +22,7 @@ const typeDefs = `
     description: String
     createdDate: String
     dueDate: String 
+    userid: User
     tasks: [Task]
   }
   type User {
