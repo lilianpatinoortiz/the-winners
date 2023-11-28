@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Grid from "@mui/material/Grid";
- import { Button as MuiButton} from "@mui/material";
+import { Button as MuiButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { TasksList } from "../TasksList";
 import { rootShouldForwardProp } from "@mui/material/styles/styled";
@@ -34,7 +34,7 @@ function TaskForm() {
     const { name, value } = event.target;
     setTaskFormData({ ...taskFormData, [name]: value });
   };
-  
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
@@ -64,7 +64,6 @@ function TaskForm() {
       userid: user._id,
     });
     navigate("/"); // Redirect user to home page
-
   };
 
   return (
@@ -117,7 +116,10 @@ function TaskForm() {
             max="3"
             name="prority"
             onChange={(e) =>
-              setTaskFormData({ ...taskFormData, priority: e.target.value })
+              setTaskFormData({
+                ...taskFormData,
+                priority: parseInt(e.target.value),
+              })
             }
             value={taskFormData.priority}
           />
