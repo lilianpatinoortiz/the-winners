@@ -5,17 +5,18 @@ const cleanDB = require("./cleanDB");
 db.once("open", async () => {
   await cleanDB("User", "users");
 
-  await User.create({
-    name: "Mark Carlson",
-    email: "mark@carlson.com",
-    password: "password12345",
-  });
-
-  await User.create({
-    name: "Admin",
-    email: "admin@admin.com",
-    password: "password12345",
-  });
+  const users = await User.insertMany([
+    {
+      name: "Mark Carlson",
+      email: "admin@admin.com",
+      password: "$2b$10$GKo/VCDWFu5ZMqCHcTTQjOlCnijQph8/2c6C8vxck.QjTXDEg9UkO",
+    },
+    {
+      name: "Test User",
+      email: "test@test.com",
+      password: "$2b$10$GKo/VCDWFu5ZMqCHcTTQjOlCnijQph8/2c6C8vxck.QjTXDEg9UkO",
+    },
+  ]);
 
   console.log("users seeded");
 
@@ -29,24 +30,28 @@ db.once("open", async () => {
       description: "Project One Description",
       createdDate: new Date(),
       dueDate: today.setDate(today.getDate() + 1),
+      userid: users[0]._id,
     },
     {
       title: "Project Two",
       description: "Project Two Description",
       createdDate: new Date(),
       dueDate: today.setDate(today.getDate() + 2),
+      userid: users[0]._id,
     },
     {
       title: "Project Three",
       description: "Project Three Description",
       createdDate: new Date(),
       dueDate: today.setDate(today.getDate() + 3),
+      userid: users[0]._id,
     },
     {
       title: "Project Four",
       description: "Project Four Description",
       createdDate: new Date(),
       dueDate: today.setDate(today.getDate() + 4),
+      userid: users[0]._id,
     },
   ]);
 
@@ -64,6 +69,7 @@ db.once("open", async () => {
     description: "Task One Description",
     project: projects[0].title,
     createdDate: today.setDate(today.getDate() + 1),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -74,6 +80,7 @@ db.once("open", async () => {
     description: "Task Two Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task Three",
@@ -83,6 +90,7 @@ db.once("open", async () => {
     description: "Task Three Description",
     project: projects[2].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -93,6 +101,7 @@ db.once("open", async () => {
     description: "Task Four Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task One",
@@ -102,6 +111,7 @@ db.once("open", async () => {
     description: "Task One Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -112,6 +122,7 @@ db.once("open", async () => {
     description: "Task Two Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task Three",
@@ -121,6 +132,7 @@ db.once("open", async () => {
     description: "Task Three Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -131,6 +143,7 @@ db.once("open", async () => {
     description: "Task Four Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task One",
@@ -140,6 +153,7 @@ db.once("open", async () => {
     description: "Task One Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -150,6 +164,7 @@ db.once("open", async () => {
     description: "Task Two Description",
     project: projects[2].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task Three",
@@ -159,6 +174,7 @@ db.once("open", async () => {
     description: "Task Three Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -169,6 +185,7 @@ db.once("open", async () => {
     description: "Task Four Description",
     project: projects[3].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task One",
@@ -178,6 +195,7 @@ db.once("open", async () => {
     description: "Task One Description",
     project: projects[3].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -188,6 +206,7 @@ db.once("open", async () => {
     description: "Task Two Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task Three",
@@ -197,6 +216,7 @@ db.once("open", async () => {
     description: "Task Three Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -207,6 +227,7 @@ db.once("open", async () => {
     description: "Task Four Description",
     project: projects[2].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task Two",
@@ -216,6 +237,7 @@ db.once("open", async () => {
     description: "Task Two Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task Three",
@@ -225,6 +247,7 @@ db.once("open", async () => {
     description: "Task Three Description",
     project: projects[2].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -235,6 +258,7 @@ db.once("open", async () => {
     description: "Task Four Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task One",
@@ -244,6 +268,7 @@ db.once("open", async () => {
     description: "Task One Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -254,6 +279,7 @@ db.once("open", async () => {
     description: "Task Two Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[1]._id,
   });
   await Task.create({
     title: "Task Three",
@@ -263,6 +289,7 @@ db.once("open", async () => {
     description: "Task Three Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[1]._id,
   });
 
   await Task.create({
@@ -273,6 +300,7 @@ db.once("open", async () => {
     description: "Task Four Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task One",
@@ -282,6 +310,7 @@ db.once("open", async () => {
     description: "Task One Description",
     project: projects[0].title,
     createdDate: new Date(),
+    userid: users[1]._id,
   });
 
   await Task.create({
@@ -292,6 +321,7 @@ db.once("open", async () => {
     description: "Task Two Description",
     project: projects[2].title,
     createdDate: new Date(),
+    userid: users[1]._id,
   });
   await Task.create({
     title: "Task Three",
@@ -301,6 +331,7 @@ db.once("open", async () => {
     description: "Task Three Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -311,6 +342,7 @@ db.once("open", async () => {
     description: "Task Four Description",
     project: projects[3].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task One",
@@ -320,6 +352,7 @@ db.once("open", async () => {
     description: "Task One Description",
     project: projects[3].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -330,6 +363,7 @@ db.once("open", async () => {
     description: "Task Two Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
   await Task.create({
     title: "Task Three",
@@ -339,6 +373,7 @@ db.once("open", async () => {
     description: "Task Three Description",
     project: projects[1].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   await Task.create({
@@ -349,6 +384,7 @@ db.once("open", async () => {
     description: "Task Four Description",
     project: projects[2].title,
     createdDate: new Date(),
+    userid: users[0]._id,
   });
 
   console.log("tasks seeded");
