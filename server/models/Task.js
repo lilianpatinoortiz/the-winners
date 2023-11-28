@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const Reminder = require("./Reminder");
 
 const taskSchema = new Schema({
   title: {
@@ -36,7 +35,6 @@ const taskSchema = new Schema({
     type: String,
     required: true,
   },
-  reminders: [Reminder.schema],
 });
 
 const Task = model("Task", taskSchema);

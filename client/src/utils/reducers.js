@@ -1,4 +1,4 @@
-import { UPDATE_TASKS } from "./actions";
+import { UPDATE_TASKS, UPDATE_PROJECTS } from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -6,6 +6,11 @@ export const reducer = (state, action) => {
       return {
         ...state,
         tasks: [...action.tasks],
+      };
+    case UPDATE_PROJECTS:
+      return {
+        ...state,
+        projects: [...action.projects],
       };
 
     default:

@@ -34,17 +34,21 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 function BadgeAvatar({ name }) {
   return (
-    <Stack direction="row" spacing={2}>
-      <h6>{name}</h6>
+    <>
+      {name ? (
+        <Stack direction="row" spacing={2}>
+          <h6>{name}</h6>
 
-      <StyledBadge
-        overlap="circular"
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        variant="dot"
-      >
-        <Avatar src="/broken-image.jpg" sx={{ bgcolor: "#000000" }} />
-      </StyledBadge>
-    </Stack>
+          <StyledBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+          >
+            <Avatar src="/broken-image.jpg" sx={{ bgcolor: "#000000" }} />
+          </StyledBadge>
+        </Stack>
+      ) : null}
+    </>
   );
 }
 

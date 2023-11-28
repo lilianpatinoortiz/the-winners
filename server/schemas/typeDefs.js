@@ -3,11 +3,6 @@ const typeDefs = `
     token: ID
     user: User
   }
-  type Reminder {
-    _id: ID
-    description: String
-    dueDate: String
-  }
 
   type Task {
     _id: ID
@@ -18,11 +13,11 @@ const typeDefs = `
     priority: Int
     status: String
     project: String
-    reminders: [Reminder]
   }
 
   type Project {
     _id: ID
+    title: String
     description: String
     createdDate: String
     dueDate: String 
@@ -40,10 +35,10 @@ const typeDefs = `
 
   type Query {
     user(email: String!): User,
-    project: Project,
+    project(id: ID!): Project,
+    projects:[Project],
     task: Task,
     tasks:[Task],
-    reminder: Reminder,
     # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
     me: User
   }
