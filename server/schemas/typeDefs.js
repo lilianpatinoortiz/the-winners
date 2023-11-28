@@ -51,6 +51,7 @@ const typeDefs = `
   type Mutation{
     createUser(name: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    createProject(title: String!, description: String!, createdDate: String!, userid: String! ,dueDate: String!): Project
   }
   
   `;

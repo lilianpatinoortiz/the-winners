@@ -64,6 +64,10 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    createProject: async (_, args) => {
+      const project = await Project.create(args);
+      return project;
+    },
   },
 };
 // Export resolvers

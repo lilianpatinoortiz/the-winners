@@ -26,3 +26,25 @@ export const LOGIN = gql`
     }
   }
 `;
+export const CREATE_PROJECT_MUTATION = gql`
+  mutation createProject(
+    $title: String!
+    $description: String!
+    $userid: String!
+    $createdDate: String!
+    $dueDate: String!
+  ) {
+    createProject(
+      title: $title
+      description: $description
+      userid: $userid
+      createdDate: $createdDate
+      dueDate: $dueDate
+    ) {
+      _id
+      title
+      description
+      userid
+    }
+  }
+`;

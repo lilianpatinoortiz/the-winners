@@ -4,12 +4,15 @@ import Button from "@mui/material/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { ChartBar } from "../Chart/index";
 import { useState, useEffect } from "react";
-
-const createProject = () => {
-  console.log("create project");
-};
+import ProjectForm from "../ProjectForm";
 
 function ProjectsContainer({ loading, projects, tasks }) {
+  const [showCreateForm, setShowCreateForm] = useState(false);
+
+  const handleCreateProject = () => {
+    setShowCreateForm(true);
+  };
+
   const [rows, setRows] = useState(projects);
   const [tasksData, setTasks] = useState(tasks);
   const [tasksByProject] = useState({});
@@ -55,13 +58,14 @@ function ProjectsContainer({ loading, projects, tasks }) {
               <Button
                 component="label"
                 variant="contained"
-                onClick={createProject}
+                onClick={handleCreateProject}
                 startIcon={<AddCircleIcon />}
               >
                 Create project
               </Button>
             </Grid>
           </Grid>
+          {showCreateForm && <ProjectForm />}
           {rows.length ? (
             <Grid container spacing={2} id="projects">
               {rows.map((project) => (
