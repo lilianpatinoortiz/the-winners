@@ -14,9 +14,12 @@ function Projects() {
 
   // state for the app
   const [state, dispatch] = useTaskGuruContext();
+  // Projects data
   const { loading, data: projects } = useQuery(QUERY_PROJECTS);
+  // Tasks data
   const { loading: loadingTasks, data: tasks } = useQuery(QUERY_TASKS);
 
+  // Handle projects changes
   useEffect(() => {
     if (projects) {
       dispatch({
@@ -26,6 +29,7 @@ function Projects() {
     }
   }, [projects, dispatch]);
 
+  // Handle tasks changes
   useEffect(() => {
     if (tasks) {
       dispatch({
@@ -35,6 +39,7 @@ function Projects() {
     }
   }, [tasks, dispatch]);
 
+  // If the user is not logged in
   if (!user.name) {
     return (
       <>
@@ -52,7 +57,7 @@ function Projects() {
       </>
     );
   }
-
+  // If the user is  logged in
   return (
     <>
       <ProjectsContainer

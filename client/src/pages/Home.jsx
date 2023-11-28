@@ -1,31 +1,16 @@
-import { TasksList } from "../components/TasksList";
-import { ChartBar, ChartLine, ChartArea } from "../components/Chart";
-import { styled } from "@mui/material/styles";
-import { useState, forwardRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 import { useTaskGuruContext } from "../utils/GlobalState";
 import { QUERY_TASKS, QUERY_ME } from "../utils/queries";
 import { UPDATE_TASKS } from "../utils/actions";
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
-
-const Alert = forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  textAlign: "center",
-  lineHeight: "60px",
-}));
+import { Dashboard } from "../components/Dashboard";
 
 function Home() {
   const [state, dispatch] = useTaskGuruContext();
   const [open, setOpen] = useState(false);
+  // Tasks data
   const { loading, data } = useQuery(QUERY_TASKS);
   // Logged user data (me)
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
@@ -33,6 +18,7 @@ function Home() {
   // chart data
   let chartData = [];
 
+  // Handle tasks changes
   useEffect(() => {
     if (data) {
       dispatch({
@@ -42,6 +28,7 @@ function Home() {
     }
   }, [data, dispatch]);
 
+  // Create chart data function
   const createChartData = () => {
     chartData = [
       { key: "Finished", value: 0 },
@@ -54,10 +41,13 @@ function Home() {
   };
 
   createChartData();
+
+  // Get the completed tasks for the metrics
   const filterCompletedTasks = () => {
     return state.tasks.filter((task) => task.status === "Finished");
   };
 
+  // Handle click for the alert
   const handleClick = () => {
     setOpen(true);
   };
@@ -68,10 +58,10 @@ function Home() {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
 
+  // If the user is not logged in
   if (!user.name) {
     return (
       <>
@@ -99,54 +89,22 @@ function Home() {
       </>
     );
   }
-  console.log("User logged in: " + user?.name + " (" + user?.email + ")");
+
+  // If the user is  logged in
+  // console.log("User logged in: " + user?.name + " (" + user?.email + ")");
 
   return (
     <>
-      {!loading ? (
-        <>
-          <div id="home-title">
-            <h3> Welcome {user.name}</h3>
-          </div>
-          <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-            <Alert
-              onClose={handleClose}
-              severity="success"
-              sx={{ width: "100%" }}
-            >
-              All data is up to date!
-            </Alert>
-          </Snackbar>
-          <Grid container spacing={2}>
-            <Grid item lg={9} md={9} xs={12} key={2}>
-              <ChartArea
-                data={chartData}
-                colors={["#00800075", "#ffc10769", "#673ab76e"]}
-                title="Tasks Status"
-              ></ChartArea>
-            </Grid>
-            <Grid item lg={3} md={3} xs={12} key={1}>
-              <Item key={1} elevation={4}>
-                <div id="task-completed">
-                  <h5>Tasks Completed</h5>
-                  <label>
-                    {filterCompletedTasks().length}/{state.tasks.length}
-                  </label>
-                </div>
-              </Item>
-            </Grid>
-            <Grid item xs={12} key={3}>
-              <Item key={1} elevation={4}>
-                <TasksList
-                  rowsPerPageProp={5}
-                  isBackgroundColorEnabled={false}
-                  tasks={state.tasks}
-                ></TasksList>
-              </Item>
-            </Grid>
-          </Grid>
-        </>
-      ) : null}
+      <Dashboard
+        loading={loading}
+        title={user.name ? "Welcome " + user.name : "Welcome"}
+        user={user}
+        open={open}
+        handleClose={handleClose}
+        chartData={chartData}
+        filterCompletedTasks={filterCompletedTasks}
+        tasks={state.tasks}
+      ></Dashboard>
     </>
   );
 }
