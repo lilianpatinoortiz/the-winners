@@ -27,11 +27,16 @@ export const LOGIN = gql`
   }
 `;
 export const CREATE_PROJECT_MUTATION = gql`
-  mutation CreateProject($name: String!, $description: String!) {
-    createProject(name: $name, description: $description) {
+  mutation createProject(
+    $title: String!
+    $description: String!
+    $userid: String!
+  ) {
+    createProject(title: $title, description: $description, userid: $userid) {
       id
-      name
+      title
       description
+      userid
     }
   }
 `;
