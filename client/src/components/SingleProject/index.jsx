@@ -44,9 +44,14 @@ const SingleProject = () => {
     }
   }, [tasks, dispatch]);
 
+  // Get my tasks
+  const filterMyTasks = () => {
+    return state.tasks.filter((task) => task.userid === user._id);
+  };
+
   // Get the filtered tasks for the project
   const filteredTasks = () => {
-    return state.tasks.filter((task) => task.project == project.title);
+    return filterMyTasks().filter((task) => task.project == project.title);
   };
   // Get the completed tasks for the metrics
   const filterCompletedTasks = () => {
