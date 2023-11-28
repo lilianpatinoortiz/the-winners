@@ -11,9 +11,9 @@ const resolvers = {
     user: async (parent, { email }) => {
       return await User.findOne({ email });
     },
-    project: async (parent, args) => {
-      console.log(args);
-      return await Project.findById(args.id);
+    project: async (parent, { id }) => {
+      console.log(id);
+      return await Project.findOne({ _id: id });
     },
     projects: async (parent) => {
       return await Project.find();

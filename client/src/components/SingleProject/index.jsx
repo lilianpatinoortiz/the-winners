@@ -12,9 +12,12 @@ const SingleProject = () => {
 
   const [state, dispatch] = useTaskGuruContext();
   const [open, setOpen] = useState(false);
+
   // Current project data
-  const { loadingProject, data: currentProject } = useQuery(QUERY_PROJECT);
-  console.log(currentProject);
+  const { loadingProject, data: currentProject } = useQuery(QUERY_PROJECT, {
+    variables: { id: id },
+  });
+  const [project, setProject] = useState(currentProject);
 
   // Tasks data
   const { loading, data: tasks } = useQuery(QUERY_TASKS);
@@ -24,16 +27,31 @@ const SingleProject = () => {
   // chart data
   let chartData = [];
 
+  // Handle project changes
+  useEffect(() => {
+    if (currentProject) {
+      setProject(currentProject.project);
+    }
+  }, [project, currentProject]);
+
   // Handle tasks changes
   useEffect(() => {
     if (tasks) {
       dispatch({
         type: UPDATE_TASKS,
-        tasks: tasks.tasks, // TODO: Filter by currentProject.title
+        tasks: tasks.tasks,
       });
     }
   }, [tasks, dispatch]);
 
+  // Get the filtered tasks for the project
+  const filteredTasks = () => {
+    return state.tasks.filter((task) => task.project == project.title);
+  };
+  // Get the completed tasks for the metrics
+  const filterCompletedTasks = () => {
+    return filteredTasks().filter((task) => task.status === "Finished");
+  };
   // Create chart data function
   const createChartData = () => {
     chartData = [
@@ -41,17 +59,13 @@ const SingleProject = () => {
       { key: "In Progress", value: 0 },
       { key: "Open", value: 0 },
     ];
-    state.tasks.map((task) => {
+    filteredTasks().map((task) => {
       chartData.find((item) => item.key == task.status).value += 1;
     });
   };
 
   createChartData();
 
-  // Get the completed tasks for the metrics
-  const filterCompletedTasks = () => {
-    return state.tasks.filter((task) => task.status === "Finished");
-  };
   return (
     <div>
       <Button variant="contained" href="/projects">
@@ -60,12 +74,12 @@ const SingleProject = () => {
       <hr></hr>
       <Dashboard
         loading={loading}
-        title={id}
+        title={project?.title}
         user={user}
         open={open}
         chartData={chartData}
         filterCompletedTasks={filterCompletedTasks}
-        tasks={state.tasks}
+        tasks={filteredTasks()}
       ></Dashboard>
     </div>
   );
