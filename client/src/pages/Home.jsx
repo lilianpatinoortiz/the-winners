@@ -106,7 +106,7 @@ function Home() {
       {!loading ? (
         <>
           <div id="home-title">
-            <h2> Welcome {user.name}</h2>
+            <h3> Welcome {user.name}</h3>
           </div>
           <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
             <Alert
@@ -118,14 +118,14 @@ function Home() {
             </Alert>
           </Snackbar>
           <Grid container spacing={2}>
-            <Grid item xs={9} key={2}>
+            <Grid item lg={9} md={9} xs={12} key={2}>
               <ChartArea
                 data={chartData}
                 colors={["#00800075", "#ffc10769", "#673ab76e"]}
                 title="Tasks Status"
               ></ChartArea>
             </Grid>
-            <Grid item xs={3} key={1}>
+            <Grid item lg={3} md={3} xs={12} key={1}>
               <Item key={1} elevation={4}>
                 <div id="task-completed">
                   <h5>Tasks Completed</h5>

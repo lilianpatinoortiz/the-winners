@@ -36,8 +36,8 @@ function TasksContainer({ loading, rows, rowsPerPageProp }) {
       {!loading ? (
         <>
           <Grid container spacing={2}>
-            <Grid item xs={9} md={10}></Grid>
-            <Grid item xs={2} md={2}>
+            <Grid item xs={4} md={10}></Grid>
+            <Grid item xs={8} md={2}>
               <Button
                 component="label"
                 variant="contained"
