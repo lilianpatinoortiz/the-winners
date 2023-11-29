@@ -107,12 +107,14 @@ body::backdrop {
   }
   .css-1ov46kg {
     flex-direction: row !important;
-    margin-top: 0px !important;
   }
   .padding20 {
     display: none;
   }
   .css-1sazv7p-MuiStack-root > :not(style) ~ :not(style) {
+    margin-top: 0px !important;
+  }
+  .css-1ov46kg > :not(style) ~ :not(style) {
     margin-top: 0px !important;
   }
   .css-fxbtpg {
