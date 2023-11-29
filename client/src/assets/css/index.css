@@ -105,6 +105,9 @@ body::backdrop {
     flex-direction: row;
     margin-left: 0px;
   }
+  .css-1ov46kg {
+    flex-direction: row !important;
+  }
   .padding20 {
     display: none;
   }
