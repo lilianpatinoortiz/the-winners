@@ -70,13 +70,14 @@ Clone the [repository](https://github.com/lilianpatinoortiz/the-winners) to your
 
 ## Credits
 
- [Task Guru](https://github.com/lilianpatinoortiz/task-guru) created by:
 - [Lilian Patino Ortiz](https://github.com/lilianpatinoortiz)
+- [Kowther Kahin](https://github.com/Kowther7)
 - [Frankie Ramirez](https://github.com/Frankieramirez72)
-- [Tiare Siaumau](https://github.com/tsiau)
+- [Nina Mahdawe](https://github.com/Ninamahdawe)
+- [Devon Hua](https://github.com/devonforyou)
 
+  
 [Shields.io](https://shields.io/) provides the badges for the README.
-
 [Jili Jiang](https://github.com/JiliJiang), ClarenceC, and [Mark Carlson](https://github.com/mark-carlson) for assisting in debugging code
 
 ## Contact
