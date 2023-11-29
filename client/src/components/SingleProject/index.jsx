@@ -17,7 +17,7 @@ const SingleProject = () => {
   const { loadingProject, data: currentProject } = useQuery(QUERY_PROJECT, {
     variables: { id: id },
   });
-  const [project, setProject] = useState(currentProject);
+  const [project, setProject] = useState([]);
 
   // Tasks data
   const { loading, data: tasks } = useQuery(QUERY_TASKS);

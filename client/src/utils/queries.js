@@ -88,3 +88,17 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_TASK = gql`
+  query singleTask($id: ID!) {
+    task(id: $id) {
+      _id
+      title
+      description
+      dueDate
+      priority
+      status
+      project
+    }
+  }
+`;

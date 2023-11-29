@@ -17,8 +17,8 @@ const resolvers = {
     projects: async (parent) => {
       return await Project.find();
     },
-    task: async (parent, { id, title }) => {
-      return await Task.findOne({ title });
+    task: async (parent, { id }) => {
+      return await Task.findOne({ _id: id });
     },
     tasks: async (parent) => {
       return await Task.find().populate("project");
@@ -70,7 +70,14 @@ const resolvers = {
     },
     addTask: async (_, args) => {
       const task = await Task.create(args);
-      return task;},
+      return task;
+    },
+    updateTask: async (_, args) => {
+      const task = await Task.findByIdAndUpdate(args.taskid, args, {
+        new: true,
+      });
+      return task;
+    },
   },
 };
 // Export resolvers

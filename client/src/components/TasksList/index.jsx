@@ -22,127 +22,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { useState, useMemo, useEffect } from "react";
-import { Modal } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_ME } from "../../utils/queries";
 import { useNavigate } from "react-router-dom";
-import { ADD_TASK } from "../../utils/mutations";
+import { UPDATE_TASK } from "../../utils/mutations";
 import Button from "@mui/material/Button";
-
-function EditTaskForm() {
-  const navigate = useNavigate();
-  // Logged user data (me)
-  const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
-  const user = userData?.me || {};
-  const [task, setTask] = useState({
-    title: "",
-    description: "",
-    createdDate: new Date(),
-    dueDate: new Date(),
-    priority: 1,
-    status: "Open",
-    project: "",
-    userid: user._id,
-  });
-  const [editTask, { error }] = useMutation(ADD_TASK);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setTask({ ...task, [name]: value });
-  };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
-    try {
-      const { data } = await addTask({
-        variables: { ...task },
-      });
-      console.log("Edit created", data.editTask);
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-    }
-
-    setTask({
-      title: "",
-      description: "",
-      createdDate: new Date(),
-      dueDate: new Date(),
-      priority: 1,
-      status: "Open",
-      project: "",
-      userid: user._id,
-    });
-  };
-
-  return (
-    <div>
-      <form
-        className="flex-row justify-center justify-space-between-md align-center"
-        onSubmit={handleFormSubmit}
-      >
-        <label>Title</label>
-        <input
-          placeholder="title"
-          type="text"
-          name="title"
-          value={task.title}
-          onChange={(e) => setTask({ ...task, title: e.target.value })}
-        />
-        <label>Description</label>
-        <input
-          placeholder="description"
-          type="text"
-          name="description"
-          onChange={(e) =>
-            setTaskFormData({ ...task, description: e.target.value })
-          }
-          value={task.description}
-        />
-        <label>Due Date</label>
-        <input
-          placeholder="due date"
-          type="date"
-          onChange={(e) =>
-            setTaskFormData({ ...task, dueDate: e.target.value })
-          }
-          value={task.dueDate}
-        />
-        <label>Prority</label>
-        <input
-          placeholder="prority"
-          type="number"
-          min="1"
-          max="3"
-          name="prority"
-          onChange={(e) =>
-            setTaskFormData({ ...task, priority: e.target.value })
-          }
-          value={task.priority}
-        />
-        <label>Project</label>
-        <input
-          placeholder="project"
-          type="text"
-          name="project"
-          onChange={(e) =>
-            setTaskFormData({ ...task, project: e.target.value })
-          }
-          value={task.project}
-        />
-        <Button type="submit" variant="success">
-          Submit
-        </Button>
-      </form>
-    </div>
-  );
-}
+import { Form, Modal } from "react-bootstrap";
+import { QUERY_PROJECTS, QUERY_TASK } from "../..//utils/queries";
+import { useTaskGuruContext } from "../../utils/GlobalState";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -295,8 +182,7 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
   const handleClose = () => setShow({ task: false });
 
   const editTask = () => {
-    console.log("ready to edit: " + selected);
-    // handleShowEditTask();
+    handleShowEditTask();
   };
 
   useEffect(() => {
@@ -326,7 +212,189 @@ function TasksList({ tasks, rowsPerPageProp, isBackgroundColorEnabled }) {
     }
     setSelected([]);
   };
+  function EditTaskForm() {
+    const navigate = useNavigate();
 
+    // Logged user data (me)
+    const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
+    const user = userData?.me || {};
+
+    // Projects data
+    const { loading: projectloading, data: projectsData } =
+      useQuery(QUERY_PROJECTS);
+    const [projects, setProjects] = useState(projectsData);
+    const [myProjects, setMyProjects] = useState([]);
+
+    // Tasks data
+    const { loading: taskloading, data: taskData } = useQuery(QUERY_TASK, {
+      variables: { id: selected[0] },
+    });
+    const [task, setTask] = useState(taskData);
+
+    const [taskFormData, setTaskFormData] = useState({});
+
+    // Handle task changes
+    useEffect(() => {
+      if (taskData) {
+        setTask(taskData.task);
+        setTaskFormData({ ...task });
+      }
+    }, [task, taskData]);
+
+    // Handle projects changes
+    useEffect(() => {
+      if (projectsData) {
+        setProjects(projectsData.projects);
+        setMyProjects(
+          projectsData.projects.filter((project) => project.userid === user._id)
+        );
+      }
+    }, [projects, projectsData]);
+
+    const [updateTask, { error }] = useMutation(UPDATE_TASK);
+
+    const handleFormSubmit = async (event) => {
+      event.preventDefault();
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+
+      try {
+        const { data } = await updateTask({
+          variables: { ...taskFormData, taskid: selected[0] },
+        });
+        //console.log("Task updated", data.updateTask);
+        Swal.fire({
+          text: "Task updated",
+          icon: "success",
+          background: "white",
+        }).then((result) => {
+          handleClose();
+          setTaskFormData({});
+          navigate("/");
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    return (
+      <>
+        {!taskloading ? (
+          <div>
+            <Form
+              className="flex-row justify-center justify-space-between-md align-center"
+              onSubmit={handleFormSubmit}
+            >
+              {" "}
+              <Form.Group className="mb-3" controlId="project">
+                <Form.Label>Status</Form.Label>
+                <Form.Select
+                  placeholder="status"
+                  type="dropdown"
+                  name="status"
+                  onChange={(e) =>
+                    setTaskFormData({ ...taskFormData, status: e.target.value })
+                  }
+                  value={taskFormData.status}
+                >
+                  <option value="Open">Open</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Finished">Finished</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="title">
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  placeholder="title"
+                  type="text"
+                  name="title"
+                  value={taskFormData.title}
+                  onChange={(e) =>
+                    setTaskFormData({ ...taskFormData, title: e.target.value })
+                  }
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="description">
+                <Form.Label>Description</Form.Label>
+                <Form.Control
+                  placeholder="description"
+                  type="text"
+                  name="description"
+                  onChange={(e) =>
+                    setTaskFormData({
+                      ...taskFormData,
+                      description: e.target.value,
+                    })
+                  }
+                  value={taskFormData.description}
+                />
+              </Form.Group>
+              {/* <Form.Group className="mb-3" controlId="dueDate">
+                <Form.Label>Due Date</Form.Label>
+                <Form.Control
+                  placeholder="due date"
+                  type="date"
+                  onChange={(e) =>
+                    setTaskFormData({
+                      ...taskFormData,
+                      dueDate: e.target.value,
+                    })
+                  }
+                  value={taskFormData.dueDate}
+                />
+              </Form.Group> */}
+              <Form.Group className="mb-3" controlId="priority">
+                <Form.Label>Prority</Form.Label>
+                <Form.Range
+                  placeholder="prority"
+                  type="number"
+                  min="1"
+                  max="3"
+                  name="prority"
+                  onChange={(e) =>
+                    setTaskFormData({
+                      ...taskFormData,
+                      priority: parseInt(e.target.value),
+                    })
+                  }
+                  value={taskFormData.priority}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="project">
+                <Form.Label>Project</Form.Label>
+                <Form.Select
+                  key="23"
+                  placeholder="project"
+                  type="dropdown"
+                  name="project"
+                  onChange={(e) =>
+                    setTaskFormData({
+                      ...taskFormData,
+                      project: e.target.value,
+                    })
+                  }
+                  value={taskFormData.project}
+                >
+                  {myProjects.map((project) => (
+                    <option key={project.title} value={project.title}>
+                      {project.title}
+                    </option>
+                  ))}
+                  =
+                </Form.Select>
+              </Form.Group>
+              <Button type="submit" variant="secondary">
+                Submit
+              </Button>
+            </Form>
+          </div>
+        ) : null}
+      </>
+    );
+  }
   const handleClick = (event, id) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected = [id];
