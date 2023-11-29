@@ -13,6 +13,8 @@ import LoginForm from "../Login/index";
 import { Modal } from "react-bootstrap";
 import SignupForm from "../Signup/index";
 import { Link } from "@mui/material";
+import { QUERY_ME } from "../../utils/queries";
+import { useQuery } from "@apollo/client";
 
 function Navbar() {
   const [show, setShow] = useState({ login: false, signup: false });
@@ -21,11 +23,20 @@ function Navbar() {
   const handleShowLogin = () => setShow({ login: true, signup: false });
   const handleShowSignup = () => setShow({ login: false, signup: true });
 
+  // Logged user data (me)
+  const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
+  const user = userData?.me || {};
+
   let accessLinks = [
-    <Link key={0} variant="contained" onClick={handleShowLogin} id="login">
-      <Button>
+    <Link
+      key={0}
+      variant="contained"
+      onClick={!user ? handleShowLogin : null}
+      id="login"
+    >
+      <Button disabled={user ? true : false}>
         <ListItemAvatar>
-          <Avatar>
+          <Avatar className={user ? "disabled" : null}>
             <LoginIcon />
           </Avatar>
         </ListItemAvatar>
