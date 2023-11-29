@@ -82,9 +82,46 @@ body::backdrop {
   width: calc(100% - 200px);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
+  #root {
+    display: inline;
+  }
   .css-im4i5j {
     width: 100%;
+  }
+
+  .MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular.css-e7x0wp {
+    display: none;
+  }
+  .MuiDrawer-root.MuiDrawer-docked.css-1fqw99a {
+    width: 100% !important;
+  }
+  .MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation0.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.MuiDrawer-paperAnchorDockedLeft.css-1l8j5k8 {
+    width: 100%;
+    padding-top: 50px;
+    border-bottom: 5px solid #607d8b;
+  }
+  .MuiStack-root.css-1sazv7p-MuiStack-root {
+    flex-direction: row;
+    margin-left: 0px;
+  }
+  .padding20 {
+    display: none;
+  }
+  .css-1sazv7p-MuiStack-root > :not(style) ~ :not(style) {
+    margin-top: 0px !important;
+  }
+  .css-fxbtpg {
+    padding: 20px;
+  }
+  .modal {
+    padding-top: 200px !important;
+  }
+  .css-i6s8oy {
+    display: none !important;
+  }
+  .css-1oifrf6 {
+    margin-top: 0px;
   }
 }
 .css-xgqgls {

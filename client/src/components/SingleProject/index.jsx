@@ -6,6 +6,7 @@ import { QUERY_TASKS, QUERY_PROJECT, QUERY_ME } from "../../utils/queries";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 import { Dashboard } from "../Dashboard";
+import Grid from "@mui/material/Grid";
 
 const SingleProject = () => {
   const { id } = useParams();
@@ -77,15 +78,19 @@ const SingleProject = () => {
         Go back
       </Button>
       <hr></hr>
-      <Dashboard
-        loading={loading}
-        title={project?.title}
-        user={user}
-        open={open}
-        chartData={chartData}
-        filterCompletedTasks={filterCompletedTasks}
-        tasks={filteredTasks()}
-      ></Dashboard>
+      <Grid container spacing={2}>
+        <Grid item xs={6} md={12} lg={12}>
+          <Dashboard
+            loading={loading}
+            title={project?.title}
+            user={user}
+            open={open}
+            chartData={chartData}
+            filterCompletedTasks={filterCompletedTasks}
+            tasks={filteredTasks()}
+          ></Dashboard>
+        </Grid>
+      </Grid>
     </div>
   );
 };

@@ -65,7 +65,12 @@ function ProjectsContainer({ loading, projects, tasks }) {
               </Button>
             </Grid>
           </Grid>
-          {showCreateForm && <ProjectForm show={showCreateForm} handleCreateProject={handleCreateProject}/>}
+          {showCreateForm && (
+            <ProjectForm
+              show={showCreateForm}
+              handleCreateProject={handleCreateProject}
+            />
+          )}
           {rows.length ? (
             <Grid container spacing={2} id="projects">
               {rows.map((project) => (
