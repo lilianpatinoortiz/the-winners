@@ -48,7 +48,13 @@ function TaskForm() {
         variables: { ...taskFormData },
       });
       console.log("Task created", data.addTask);
-      navigate("/");
+      Swal.fire({
+        text: "Task created",
+        icon: "success",
+        background: "white",
+      }).then((result) => {
+        navigate("/");
+      });
     } catch (err) {
       console.error(err);
     }

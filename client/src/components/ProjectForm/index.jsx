@@ -47,7 +47,13 @@ const ProjectForm = ({ show, handleCreateProject }) => {
       });
 
       console.log("Project created", data.createProject);
-      navigate("/");
+      Swal.fire({
+        text: "Project created",
+        icon: "success",
+        background: "white",
+      }).then((result) => {
+        navigate("/");
+      });
     } catch (error) {
       console.error("Error creating project", error);
       setShowAlert(true);
