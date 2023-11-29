@@ -1421,3 +1421,7 @@ a {
   width: 100%;
   text-align: center;
 }
+
+.MuiAvatar-root.MuiAvatar-circular.MuiAvatar-colorDefault.css-154ogbs {
+  background-color: #1976d2 !important;
+}
