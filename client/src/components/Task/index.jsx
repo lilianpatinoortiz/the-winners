@@ -1,22 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import { Button as MuiButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { TasksList } from "../TasksList";
-import { rootShouldForwardProp } from "@mui/material/styles/styled";
 import { Form, Modal, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { ADD_TASK } from "../../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
-import { QUERY_ME } from "../../utils/queries";
+import { QUERY_ME, QUERY_PROJECTS } from "../../utils/queries";
 import { useNavigate } from "react-router-dom";
+import { UPDATE_PROJECTS } from "../../utils/actions";
+import { useTaskGuruContext } from "../../utils/GlobalState";
 
 function TaskForm() {
   const navigate = useNavigate();
+  const [state, dispatch] = useTaskGuruContext();
 
   // Logged user data (me)
   const { loading: userLoading, data: userData } = useQuery(QUERY_ME);
   const user = userData?.me || {};
+
+  // Projects data
+  const { loading, data: projects } = useQuery(QUERY_PROJECTS);
+
+  // Handle projects changes
+  useEffect(() => {
+    if (projects) {
+      dispatch({
+        type: UPDATE_PROJECTS,
+        projects: projects.projects,
+      });
+    }
+  }, [projects, dispatch]);
 
   const [taskFormData, setTaskFormData] = useState({
     title: "",
@@ -70,6 +84,11 @@ function TaskForm() {
       userid: user._id,
     });
     navigate("/"); // Redirect user to home page
+  };
+
+  // Get my projects
+  const filterMyProjects = () => {
+    return state.projects.filter((project) => project.userid === user._id);
   };
 
   return (
@@ -132,15 +151,20 @@ function TaskForm() {
         </Form.Group>
         <Form.Group className="mb-3" controlId="project">
           <Form.Label>Project</Form.Label>
-          <Form.Control
+          <Form.Select
             placeholder="project"
-            type="text"
+            type="dropdown"
             name="project"
             onChange={(e) =>
               setTaskFormData({ ...taskFormData, project: e.target.value })
             }
             value={taskFormData.project}
-          />
+          >
+            {filterMyProjects().map((project) => (
+              <option value={project.title}>{project.title}</option>
+            ))}
+            =
+          </Form.Select>
         </Form.Group>
         <Button type="submit" variant="secondary">
           Submit
