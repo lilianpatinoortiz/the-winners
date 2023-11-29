@@ -21,7 +21,7 @@ This project involves a comprehensive Task Management Application that aims to s
 
 ## Deployed Site
 
-- LINK TO DEPLOYED SITE
+- Link to application: [Task Guru 2.0](https://shielded-thicket-49496-3fa79d1c89ee.herokuapp.com/)
 
 ![Alt text](<images/Task Guru 2.0.png>)
 
