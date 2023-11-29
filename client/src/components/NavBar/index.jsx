@@ -31,12 +31,12 @@ function Navbar() {
     <Link
       key={0}
       variant="contained"
-      onClick={!user ? handleShowLogin : null}
+      onClick={!user.name ? handleShowLogin : null}
       id="login"
     >
-      <Button disabled={user ? true : false}>
+      <Button disabled={user.name ? true : false}>
         <ListItemAvatar>
-          <Avatar className={user ? "disabled" : null}>
+          <Avatar className={user.name ? "disabled" : null}>
             <LoginIcon />
           </Avatar>
         </ListItemAvatar>
