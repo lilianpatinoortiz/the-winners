@@ -78,10 +78,15 @@ body::backdrop {
     margin 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
   transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms,
     margin 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
-  margin-left: 240px;
-  width: calc(100% - 240px);
+  /* margin-left: 240px; */
+  width: calc(100% - 200px);
 }
 
+@media (max-width: 600px) {
+  .css-im4i5j {
+    width: 100%;
+  }
+}
 .css-xgqgls {
   position: relative;
   display: -webkit-box;
@@ -387,7 +392,7 @@ body::backdrop {
 .css-1fqw99a .MuiDrawer-paper {
   position: relative;
   white-space: nowrap;
-  width: 240px;
+  width: 200px;
   -webkit-transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
   transition: width 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
   box-sizing: border-box;
