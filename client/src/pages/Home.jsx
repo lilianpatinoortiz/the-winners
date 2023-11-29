@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { useTaskGuruContext } from "../utils/GlobalState";
-import { QUERY_TASKS, QUERY_MY_TASKS, QUERY_ME } from "../utils/queries";
+import { QUERY_TASKS, QUERY_ME } from "../utils/queries";
 import { UPDATE_TASKS } from "../utils/actions";
-import Skeleton from "@mui/material/Skeleton";
-import Box from "@mui/material/Box";
 import { Dashboard } from "../components/Dashboard";
 
 function Home() {
@@ -77,21 +75,8 @@ function Home() {
           <>
             <h4>
               You need to be logged in to see this. Use the access links to sign
-              up or log in!
+              up or log in! 🙂
             </h4>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box sx={{ margin: 1 }}>
-                <Skeleton variant="rectangular" width={900} height={200} />
-              </Box>
-              <Box sx={{ width: "100%" }}>
-                <Skeleton variant="rectangular" width={300} height={200} />
-              </Box>
-            </Box>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Box sx={{ margin: 1 }}>
-                <Skeleton variant="rectangular" width={1200} height={500} />
-              </Box>
-            </Box>
           </>
         ) : null}
       </>

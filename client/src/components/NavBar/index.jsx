@@ -1,7 +1,6 @@
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import HomeIcon from "@mui/icons-material/Home";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LoginIcon from "@mui/icons-material/Login";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
@@ -24,14 +23,13 @@ function Navbar() {
 
   let accessLinks = [
     <Link key={0} variant="contained" onClick={handleShowLogin} id="login">
-      
-      <Button >
-      <ListItemAvatar>
-        <Avatar>
-          <LoginIcon />
-        </Avatar>
-      </ListItemAvatar>
-      <ListItemText primary="Login" />
+      <Button>
+        <ListItemAvatar>
+          <Avatar>
+            <LoginIcon />
+          </Avatar>
+        </ListItemAvatar>
+        <ListItemText primary="Login" />
       </Button>
     </Link>,
 
@@ -70,14 +68,6 @@ function Navbar() {
         </Avatar>
       </ListItemAvatar>
       <ListItemText primary="Tasks" />
-    </Button>,
-    <Button key={3} href="/kanban">
-      <ListItemAvatar>
-        <Avatar>
-          <CalendarMonthIcon />
-        </Avatar>
-      </ListItemAvatar>
-      <ListItemText primary="Kanban" />
     </Button>,
   ];
   return (

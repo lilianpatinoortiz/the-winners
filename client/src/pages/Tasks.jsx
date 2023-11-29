@@ -4,8 +4,6 @@ import { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_TASKS, QUERY_ME } from "../utils/queries";
 import { UPDATE_TASKS } from "../utils/actions";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
 
 function Tasks() {
   // Logged user data (me)
@@ -38,13 +36,10 @@ function Tasks() {
       <>
         {!userLoading ? (
           <>
-            <h5>
+            <h4>
               You need to be logged in to see this. Use the access links to sign
-              up or log in!
-            </h5>
-            <Stack spacing={1}>
-              <Skeleton variant="rectangular" width={1000} height={600} />
-            </Stack>
+              up or log in! 🙂
+            </h4>
           </>
         ) : null}
       </>
