@@ -27,6 +27,8 @@ This project involves a comprehensive Task Management Application that aims to s
 
 ![Task guru](images/project3.gif)
 
+Video: https://drive.google.com/file/d/1xvYPVKw3B20d7IYjujNoOC6fVo9SQB2y/view?usp=sharing
+
 ## Description
 
 `Task Guru 2.0` is a MERN full-stack application that allows users to keep track of projects and tasks.
