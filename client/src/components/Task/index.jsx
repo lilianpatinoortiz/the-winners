@@ -56,7 +56,9 @@ function TaskForm() {
       event.preventDefault();
       event.stopPropagation();
     }
-
+    if (taskFormData.project === "") {
+      taskFormData.project = filterMyProjects()[0].title;
+    }
     try {
       const { data } = await addTask({
         variables: { ...taskFormData },
@@ -158,12 +160,11 @@ function TaskForm() {
             onChange={(e) =>
               setTaskFormData({ ...taskFormData, project: e.target.value })
             }
-            value={taskFormData.project}
+            value={taskFormData.projectß}
           >
             {filterMyProjects().map((project) => (
               <option value={project.title}>{project.title}</option>
             ))}
-            =
           </Form.Select>
         </Form.Group>
         <Button type="submit" variant="secondary">
