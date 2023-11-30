@@ -1,4 +1,4 @@
-[![License: MIT license](https://img.shields.io/badge/License-MIT_license-success)](https://opensource.org/licenses/MIT)    
+[![License: MIT license](https://img.shields.io/badge/License-MIT_license-success)](https://opensource.org/licenses/MIT)  
 ![Project status](https://img.shields.io/badge/Status-Complete-success)
 <img src="https://img.shields.io/github/last-commit/lilianpatinoortiz/the-winners" >
 <img src="https://img.shields.io/github/languages/top/lilianpatinoortiz/the-winners"  />
@@ -12,20 +12,20 @@ This project involves a comprehensive Task Management Application that aims to s
 
 ## Table of Contents
 
-* [General Information](#general-information)
-* [Deployed Site](#deployed-site)
-* [Description](#description)
-* [Technologies Used](#technologies-used)
-* [Installation](#installation)
-* [Credits](#credits)
-* [License](#license)
-* [Contact](#contact)
+- [General Information](#general-information)
+- [Deployed Site](#deployed-site)
+- [Description](#description)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Credits](#credits)
+- [License](#license)
+- [Contact](#contact)
 
 ## Deployed Site
 
 - Link to application: [Task Guru 2.0](https://shielded-thicket-49496-3fa79d1c89ee.herokuapp.com/)
 
-![Alt text](<images/Task Guru 2.0.png>)
+![Task guru](images/project3.gif)
 
 ## Description
 
@@ -73,10 +73,10 @@ Green = 3
 - [express v4.17.2](https://www.npmjs.com/package/express) - Web application framework for building server-side applications.
 - [nodemon v2.0.2](https://www.npmjs.com/package/nodemon) - Development tool for automatically restarting the server during code changes.
 - [Stripe v8.67.0](https://www.npmjs.com/package/stripe) - Payment processing platform.
-- [Mui](https://mui.com/) - 
-Open source React component library implementing Google's material design.
-- [Bootstrap](https://getbootstrap.com/) - 
-CSS Framework for buidling responsive, mobile-first sites.
+- [Mui](https://mui.com/) -
+  Open source React component library implementing Google's material design.
+- [Bootstrap](https://getbootstrap.com/) -
+  CSS Framework for buidling responsive, mobile-first sites.
 
 ## Installation
 
@@ -87,7 +87,7 @@ There is no installation required. However, if you would like to run the applica
 - [Node.js](https://nodejs.org/en/)
 - [MongoDB](https://www.mongodb.com/try/download/community)
 
-### Clone 
+### Clone
 
 Clone the [repository](https://github.com/lilianpatinoortiz/the-winners) to your local machine.
 
@@ -107,7 +107,6 @@ Clone the [repository](https://github.com/lilianpatinoortiz/the-winners) to your
 - [Nina Mahdawe](https://github.com/Ninamahdawe)
 - [Devon Hua](https://github.com/devonforyou)
 
-  
 [Shields.io](https://shields.io/) provides the badges for the README.
 [Jili Jiang](https://github.com/JiliJiang), ClarenceC, and [Mark Carlson](https://github.com/mark-carlson) for assisting in debugging code
 
