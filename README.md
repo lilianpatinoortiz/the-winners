@@ -1,5 +1,7 @@
 [![License: MIT license](https://img.shields.io/badge/License-MIT_license-success)](https://opensource.org/licenses/MIT)    
 ![Project status](https://img.shields.io/badge/Status-Complete-success)
+<img src="https://img.shields.io/github/last-commit/lilianpatinoortiz/the-winners" >
+<img src="https://img.shields.io/github/languages/top/lilianpatinoortiz/the-winners"  />
 
 # Task Guru 2.0
 
@@ -28,6 +30,35 @@ This project involves a comprehensive Task Management Application that aims to s
 ## Description
 
 `Task Guru 2.0` is a MERN full-stack application that allows users to keep track of projects and tasks.
+
+USER STORY
+
+```
+As a user, I want to be able to create tasks within the management app so that I can efficiently manage my responsibilities and track the progress.
+```
+
+ACCEPTANCE CRITERIA
+
+```
+Create Project & Task:
+
+WHEN I open that management app and choose to create a new task and/or projects
+THEN I should be prompted to enter a title, description and due date
+WHEN I have entered the details and saved the task/project
+THEN the newly created task should appear in the task list
+
+Task Priority:
+
+WHEN I create or edit a task,
+THEN I should be able to set the task’s priority level ( 1,2,3),
+WHEN I set the priority
+THEN task will be colored coded per priority.
+
+Red = 1
+Yellow = 2
+Green = 3
+
+```
 
 ## Technologies Used
 
